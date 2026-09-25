@@ -34,7 +34,7 @@
 
   /* ---------- header ---------- */
   header{
-    max-width: 1000px; margin: 0 auto 8px;
+    max-width: 1320px; margin: 0 auto 8px;
     display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap;
   }
   .brand{ display:flex; align-items:center; gap:12px; }
@@ -54,7 +54,7 @@
 
   /* ---------- tabs ---------- */
   .tabbar{
-    max-width:1000px; margin: 22px auto 0; display:flex; justify-content:center;
+    max-width:1320px; margin: 22px auto 0; display:flex; justify-content:center;
   }
   .tabbar-inner{
     display:inline-flex; gap:4px; padding:4px; border-radius:999px;
@@ -70,9 +70,9 @@
   [hidden]{ display:none !important; }
 
   /* ---------- hero ---------- */
-  .hero{ max-width:1000px; margin: 28px auto 8px; text-align:center; }
-  .hero h2{ font-size: clamp(1.6rem, 3.4vw, 2.4rem); color:var(--paper); }
-  .hero p{ color:var(--paper-dim); max-width:600px; margin: 12px auto 0; font-size:0.98rem; }
+  .hero{ max-width:1320px; margin: 28px auto 8px; text-align:center; }
+  .hero h2{ font-size: clamp(1.8rem, 3.8vw, 2.9rem); color:var(--paper); }
+  .hero p{ color:var(--paper-dim); max-width:680px; margin: 12px auto 0; font-size:1.05rem; }
   .hero .hint{ color:var(--teal-300); font-size:0.85rem; margin-top:20px; font-weight:600; }
 
   /* ---------- toggle demo (teaches the interaction) ---------- */
@@ -93,30 +93,30 @@
 
   /* ---------- ring layout ---------- */
   .ring-stage{
-    max-width: 1000px; margin: 34px auto 0;
+    max-width: 1320px; margin: 34px auto 0;
     display:flex; justify-content:center;
   }
   .ring{
     position:relative;
-    width: min(560px, 92vw);
+    width: min(780px, 78vw);
     aspect-ratio: 1;
   }
   .hub{
     position:absolute; inset:0; margin:auto;
-    width: 34%; aspect-ratio:1; border-radius:50%;
+    width: 32%; aspect-ratio:1; border-radius:50%;
     background: radial-gradient(circle at 35% 30%, var(--ink-800), var(--ink-950) 75%);
     border:1px solid var(--line);
     box-shadow: 0 0 0 1px rgba(94,234,212,0.06), 0 20px 50px -20px rgba(0,0,0,0.7);
     display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
     padding: 10px;
   }
-  .hub .num{ font-family:'Fraunces', serif; font-size: clamp(1.6rem,4.4vw,2.2rem); color:var(--teal-300); line-height:1; }
-  .hub .lbl{ font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); margin-top:6px; }
+  .hub .num{ font-family:'Fraunces', serif; font-size: clamp(2rem,5vw,2.8rem); color:var(--teal-300); line-height:1; }
+  .hub .lbl{ font-size:0.78rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); margin-top:8px; }
 
   .spoke{ position:absolute; top:50%; left:50%; width:0; height:0; }
   .tile{
     position:absolute;
-    width: 118px; height: 118px;
+    width: 148px; height: 148px;
     display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
     gap:6px;
     border-radius: 18px;
@@ -135,9 +135,9 @@
     outline:none;
   }
   .tile .tag{
-    font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--teal-300);
+    font-size:0.78rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--teal-300);
   }
-  .tile .name{ font-size:0.86rem; font-weight:600; line-height:1.2; }
+  .tile .name{ font-size:0.95rem; font-weight:600; line-height:1.25; }
 
   /* narrow layout: abandon ring, use a grid */
   .grid-fallback{ display:none; }
@@ -152,8 +152,8 @@
 
   /* ---------- footer notes / info cards ---------- */
   .card-row{
-    max-width:900px; margin: 46px auto 0;
-    display:grid; grid-template-columns: 1fr 1fr; gap:16px;
+    max-width:1100px; margin: 46px auto 0;
+    display:grid; grid-template-columns: 1fr 1fr; gap:20px;
   }
   @media (max-width: 720px){ .card-row{ grid-template-columns: 1fr; } }
 
@@ -169,14 +169,14 @@
   .info-card.plain p:last-child{ margin-bottom:0; }
 
   footer{
-    max-width:1000px; margin: 30px auto 0; text-align:center;
+    max-width:1320px; margin: 30px auto 0; text-align:center;
     color: var(--muted); font-size:0.76rem;
   }
 
   /* ---------- careers & clusters view ---------- */
   .cluster-grid{
-    max-width:1000px; margin: 30px auto 0;
-    display:grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap:22px;
+    max-width:1320px; margin: 30px auto 0;
+    display:grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap:22px;
   }
   .cluster-card{
     border:2px solid var(--teal-700); border-radius:14px; padding:16px 18px;
@@ -198,7 +198,7 @@
     flex-shrink:0;
   }
   .careers-legend{
-    max-width:1000px; margin:0 auto; text-align:center; color:var(--muted); font-size:0.85rem;
+    max-width:760px; margin:0 auto; text-align:center; color:var(--muted); font-size:0.85rem;
   }
 
   /* ---------- drawer ---------- */
@@ -580,7 +580,7 @@
 
     var tile = document.createElement('button');
     tile.className = 'tile';
-    tile.style.transform = 'translate(-50%,-50%) translate(190px,0) rotate(' + (-angle) + 'deg)';
+    tile.style.transform = 'translate(-50%,-50%) translate(265px,0) rotate(' + (-angle) + 'deg)';
     tile.innerHTML = '<span class="tag mono">' + ind.tag + '</span><span class="name">' + ind.name + '</span>';
     tile.addEventListener('click', function(){ openDrawer(i); });
 
