@@ -104,7 +104,7 @@
 
   /* ---------- tiles row ---------- */
   .tiles-row{
-    max-width: 1320px; margin: 46px auto 0;
+    max-width: 1320px; margin: 0 auto;
     display:flex; flex-wrap:wrap; justify-content:center; gap:20px;
   }
   .tile{
@@ -133,10 +133,13 @@
   .tile .name{ font-size:0.86rem; font-weight:600; line-height:1.2; }
 
   .tiles-caption{
-    margin-top: 20px; display:flex; align-items:baseline; justify-content:center; gap:10px;
+    display:flex; align-items:baseline; justify-content:center; gap:12px;
+    width:fit-content; margin: 0 auto 26px;
+    border:1px solid var(--teal-700); border-radius:999px; padding:10px 26px;
+    background: var(--ink-850);
   }
-  .tiles-caption .num{ font-family:'Fraunces', serif; font-size:1.8rem; color:var(--teal-300); line-height:1; }
-  .tiles-caption .lbl{ font-size:0.8rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); }
+  .tiles-caption .num{ font-family:'Fraunces', serif; font-size:2.4rem; color:var(--teal-300); line-height:1; }
+  .tiles-caption .lbl{ font-size:0.95rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); }
 
   /* ---------- footer notes / info cards ---------- */
   .card-row{
@@ -167,9 +170,9 @@
     display:grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap:22px;
   }
   .cluster-card{
-    border:2px solid var(--teal-700); border-radius:14px; padding:16px 18px;
+    border:3px solid var(--teal-400); border-radius:14px; padding:16px 18px;
     background: var(--ink-850);
-    box-shadow: 0 6px 18px -10px rgba(0,0,0,0.6);
+    box-shadow: 0 8px 22px -10px rgba(0,0,0,0.7);
   }
   .cluster-card h3{ font-size:0.95rem; color:var(--teal-300); margin-bottom:10px; }
   .cluster-card ul{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:6px; }
@@ -304,7 +307,7 @@
 <div id="view-indicators">
   <div class="top-grid">
     <div class="hero-box">
-      <h2>Health Career Compendium</h2>
+      <h2>Health Careers Compendium</h2>
       <p>There are seven areas of information every report needs &ndash; use this webtool to find information you can trust.</p>
     </div>
     <div class="hero-side">
@@ -322,18 +325,18 @@
     </div>
   </div>
 
+  <div class="tiles-caption" style="margin-top:46px;"><span class="num" id="tiles-count"></span><span class="lbl">Comparison Areas</span></div>
   <div class="tiles-row" id="tiles-row"></div>
-  <div class="tiles-caption"><span class="num" id="tiles-count"></span><span class="lbl">Comparison Areas</span></div>
 
   <div class="card-row">
     <div class="info-card">
       <h3>Sources used in this tool</h3>
       <ul>
-        <li><b>O*NET OnLine</b> (onetonline.org). A federally funded database of detailed occupation information: tasks, related jobs, wages, and work context.</li>
-        <li><b>BLS Occupational Outlook Handbook</b> (bls.gov/ooh). The federal government's occupational reference for pay, job outlook, and work environment. Updated on a regular schedule.</li>
-        <li><b>CA EDD Labor Market Information</b> (labormarketinfo.edd.ca.gov). California specific wage and employment projections, including regional Bay Area data.</li>
-        <li><b>State licensing boards</b> (for example the Dental Board of California, or the California Department of Public Health). The official agencies that set and publish licensing and certification requirements.</li>
-        <li><b>CareerOneStop License Finder</b>. A federal tool that points you to the correct state licensing board when you can't find it directly.</li>
+        <li><b><a href="https://www.onetonline.org/" target="_blank" rel="noopener">O*NET OnLine</a></b> (onetonline.org). A federally funded database of detailed occupation information: tasks, related jobs, wages, and work context.</li>
+        <li><b><a href="https://www.bls.gov/ooh/" target="_blank" rel="noopener">BLS Occupational Outlook Handbook</a></b> (bls.gov/ooh). The federal government's occupational reference for pay, job outlook, and work environment. Updated on a regular schedule.</li>
+        <li><b><a href="https://labormarketinfo.edd.ca.gov/" target="_blank" rel="noopener">CA EDD Labor Market Information</a></b> (labormarketinfo.edd.ca.gov). California specific wage and employment projections, including regional Bay Area data.</li>
+        <li><b><a href="https://search.dca.ca.gov/" target="_blank" rel="noopener">State licensing boards</a></b> (for example the Dental Board of California, or the California Department of Public Health). The official agencies that set and publish licensing and certification requirements.</li>
+        <li><b><a href="https://www.careeronestop.org/toolkit/licenses/find-licenses.aspx" target="_blank" rel="noopener">CareerOneStop License Finder</a></b>. A federal tool that points you to the correct state licensing board when you can't find it directly.</li>
       </ul>
     </div>
     <div class="info-card plain">
@@ -374,11 +377,11 @@
       name: "Education & Training Pathway",
       what: "How much school or training this career actually requires, and what kind: a certificate, an associate degree, a bachelor's degree, or a graduate or professional degree. Also roughly how many years it takes.",
       sources: [
-        {name:"O*NET OnLine, Job Zone tab", use:"Search the career title at onetonline.org and open its profile. The Job Zone section describes how much preparation the career needs."},
-        {name:"O*NET OnLine, Education tab", use:"Shows the percentage of people currently in this job at each education level. This is a real survey, not a guess."}
+        {name:"O*NET OnLine, Job Zone section", use:"Search the career title at onetonline.org and open its profile. The Job Zone section describes how much preparation the career needs."},
+        {name:"O*NET OnLine, Education section", use:"Shows the percentage of people currently in this job at each education level. This is a real survey, not a guess."}
       ],
-      howFind: "Search the career title at onetonline.org. Open its profile. Click the Job Zone tab.",
-      howReport: "State the type of degree required and about how many total years of school it takes.",
+      howFind: "Search the career title at onetonline.org. Open its profile. Click the Job Zone section.",
+      howReport: "State the type of degree or training program required and about how much time it takes.",
       examples: [
         {
           label: "Dentist",
@@ -398,7 +401,7 @@
       what: "The legal requirements to practice: which state agency licenses this career, what exam or exams are required, and any renewal rules.",
       sources: [
         {name:"State licensing board site", use:"Every regulated health career has one, for example the Dental Board of California or the California Department of Public Health. Search for the career name plus California board."},
-        {name:"O*NET OnLine, Licensing tab", use:"Links out to CareerOneStop's License Finder, a good second check if you can't find the board yourself."}
+        {name:"O*NET OnLine, Licensing section", use:"Links out to CareerOneStop's License Finder, a good second check if you can't find the board yourself."}
       ],
       howFind: "Identify the correct state board for the career. Find a page called something like Applicants or Licensing Requirements.",
       howReport: "List the required degree, the exam or exams by name, and how often the license must be renewed.",
@@ -476,21 +479,21 @@
       name: "Day-to-Day Duties",
       what: "What someone in this career actually does during a typical day or week. Real tasks, not a vague job title description.",
       sources: [
-        {name:"O*NET OnLine, Tasks tab", use:"Lists specific task statements, ranked by how important or frequent they are."},
+        {name:"O*NET OnLine, Tasks section", use:"Lists specific task statements, ranked by how important or frequent they are."},
         {name:"BLS OOH, What They Do section", use:"A shorter, plain language summary of core duties."}
       ],
-      howFind: "On the O*NET profile, open the Tasks tab.",
+      howFind: "On the O*NET profile, open the Tasks section.",
       howReport: "Pick four to six real tasks in the source's own words. Avoid vague summaries like 'helps patients.'",
       examples: [
         {
           label: "Dentist",
           finding: "Diagnose and treat problems with teeth, gums, and related mouth structures. Remove decay and place fillings. Examine dental X-rays. Administer local anesthetics. Prescribe medications. In private practice, also supervise dental hygienists and assistants and manage the business side of the office.",
-          cite: "O*NET OnLine, SOC 29-1021.00, Tasks tab; BLS OOH, What Dentists Do."
+          cite: "O*NET OnLine, SOC 29-1021.00, Tasks section; BLS OOH, What Dentists Do."
         },
         {
           label: "CNA",
           finding: "Monitor and record patients' vital signs. Help patients bathe, dress, and eat. Turn and reposition patients who cannot move on their own. Answer patient calls and report changes to nurses. Assist with basic medical procedures under supervision.",
-          cite: "O*NET OnLine, SOC 31-1131.00, Tasks tab."
+          cite: "O*NET OnLine, SOC 31-1131.00, Tasks section."
         }
       ]
     },
@@ -499,20 +502,20 @@
       name: "Career Advancement",
       what: "How someone grows in this career over time: promotions, specializations, or related careers reachable with more training.",
       sources: [
-        {name:"O*NET OnLine, Related Occupations tab", use:"Lists occupations people in this career often move into, plus their SOC codes so you can look each one up."}
+        {name:"O*NET OnLine, Related Occupations section", use:"Lists occupations people in this career often move into, plus their SOC codes so you can look each one up."}
       ],
-      howFind: "On the O*NET profile, open the Related Occupations tab.",
+      howFind: "On the O*NET profile, open the Related Occupations section.",
       howReport: "Name two or three related or 'next step' occupations, and what extra training each one needs.",
       examples: [
         {
           label: "Dentist",
           finding: "A general dentist can pursue a specialty residency such as orthodontics, oral and maxillofacial surgery, or periodontics. Some move into teaching at a dental school. Others open and own a private practice, taking on management responsibilities over hygienists and assistants.",
-          cite: "O*NET OnLine, SOC 29-1021.00, Related Occupations tab."
+          cite: "O*NET OnLine, SOC 29-1021.00, Related Occupations section."
         },
         {
           label: "CNA",
           finding: "A CNA can move into a Licensed Vocational Nurse program, and from there into a Registered Nurse program. Each step requires additional schooling and its own licensing exam.",
-          cite: "O*NET OnLine, SOC 31-1131.00, Related Occupations tab."
+          cite: "O*NET OnLine, SOC 31-1131.00, Related Occupations section."
         }
       ]
     },
@@ -521,10 +524,10 @@
       name: "Work Schedule & Flexibility",
       what: "Typical weekly hours, shift patterns, and how much control a person in this career usually has over their own schedule.",
       sources: [
-        {name:"O*NET OnLine, Work Context tab", use:"Answers survey questions like how often the job requires evening or weekend work and how much freedom workers have to set their own schedule."},
+        {name:"O*NET OnLine, Work Context section", use:"Answers survey questions like how often the job requires evening or weekend work and how much freedom workers have to set their own schedule."},
         {name:"BLS OOH, Work Environment section", use:"Plain language notes on typical hours and self-employment rates."}
       ],
-      howFind: "On the O*NET profile, open the Work Context tab. Also check the Work Environment section on BLS OOH.",
+      howFind: "On the O*NET profile, open the Work Context section. Also check the Work Environment section on BLS OOH.",
       howReport: "Note typical hours, evening or weekend work, and how much control workers have over their schedule.",
       examples: [
         {
@@ -594,6 +597,15 @@
     return finding;
   }
 
+  function sourceUrl(name){
+    if (name.indexOf('O*NET') !== -1) return 'https://www.onetonline.org/';
+    if (name.indexOf('CareerOneStop') !== -1) return 'https://www.careeronestop.org/toolkit/licenses/find-licenses.aspx';
+    if (name.indexOf('EDD') !== -1) return 'https://labormarketinfo.edd.ca.gov/';
+    if (name.indexOf('BLS') !== -1 || name.indexOf('Bureau of Labor') !== -1 || name.indexOf('Occupational Outlook') !== -1) return 'https://www.bls.gov/ooh/';
+    if (name.indexOf('licensing board') !== -1) return 'https://search.dca.ca.gov/';
+    return null;
+  }
+
   function openDrawer(i){
     var ind = INDICATORS[i];
     var activeEx = 0;
@@ -602,7 +614,11 @@
     drawerTitle.textContent = ind.name;
 
     var srcHtml = ind.sources.map(function(s){
-      return '<li><div class="src-name">' + s.name + '</div><div class="src-use">' + s.use + '</div></li>';
+      var url = sourceUrl(s.name);
+      var nameHtml = url
+        ? '<a href="' + url + '" target="_blank" rel="noopener">' + s.name + '</a>'
+        : s.name;
+      return '<li><div class="src-name">' + nameHtml + '</div><div class="src-use">' + s.use + '</div></li>';
     }).join('');
 
     function exampleBlock(){
