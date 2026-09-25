@@ -70,15 +70,26 @@
   [hidden]{ display:none !important; }
 
   /* ---------- hero ---------- */
-  .hero{ max-width:1320px; margin: 28px auto 8px; text-align:center; }
-  .hero h2{ font-size: clamp(1.8rem, 3.8vw, 2.9rem); color:var(--paper); }
-  .hero p{ color:var(--paper-dim); max-width:680px; margin: 12px auto 0; font-size:1.05rem; }
-  .hero .hint{ color:var(--teal-300); font-size:0.85rem; margin-top:20px; font-weight:600; }
+  .top-grid{
+    max-width:1320px; margin: 34px auto 0;
+    display:grid; grid-template-columns: 1.05fr 1fr; gap:26px; align-items:stretch;
+  }
+  @media (max-width: 820px){ .top-grid{ grid-template-columns: 1fr; } }
+
+  .hero-box{
+    border:1px solid var(--line); border-radius:16px; padding:30px 32px;
+    background: var(--ink-850); text-align:left; display:flex; flex-direction:column; justify-content:center;
+  }
+  .hero-box h2{ font-size: clamp(1.8rem, 2.6vw, 2.6rem); color:var(--paper); margin-bottom:14px; }
+  .hero-box p{ color:var(--paper-dim); font-size:1.02rem; margin:0; max-width:none; }
+
+  .hero-side{ display:flex; flex-direction:column; justify-content:center; gap:14px; }
+  .hero-side .hint{ color:var(--teal-300); font-size:0.88rem; font-weight:600; }
 
   /* ---------- toggle demo (teaches the interaction) ---------- */
   .demo{
-    max-width:420px; margin:14px auto 0;
-    border:1px solid var(--teal-700); border-radius:14px; padding:14px 16px; text-align:left;
+    margin:0; max-width:none;
+    border:1px solid var(--teal-700); border-radius:14px; padding:16px 18px; text-align:left;
     background: linear-gradient(165deg, rgba(94,234,212,0.08), transparent 60%), var(--ink-850);
   }
   .demo .demo-head{ display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap; margin-bottom:10px; }
@@ -91,32 +102,13 @@
   .demo-switch button.active{ background: var(--teal-600); border-color:var(--teal-600); color:var(--ink-950); font-weight:600; }
   .demo p{ color:var(--paper); font-size:0.88rem; margin:0; max-width:none; }
 
-  /* ---------- ring layout ---------- */
-  .ring-stage{
-    max-width: 1320px; margin: 34px auto 0;
-    display:flex; justify-content:center;
+  /* ---------- tiles row ---------- */
+  .tiles-row{
+    max-width: 1320px; margin: 46px auto 0;
+    display:flex; flex-wrap:wrap; justify-content:center; gap:20px;
   }
-  .ring{
-    position:relative;
-    width: min(780px, 78vw);
-    aspect-ratio: 1;
-  }
-  .hub{
-    position:absolute; inset:0; margin:auto;
-    width: 32%; aspect-ratio:1; border-radius:50%;
-    background: radial-gradient(circle at 35% 30%, var(--ink-800), var(--ink-950) 75%);
-    border:1px solid var(--line);
-    box-shadow: 0 0 0 1px rgba(94,234,212,0.06), 0 20px 50px -20px rgba(0,0,0,0.7);
-    display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
-    padding: 10px;
-  }
-  .hub .num{ font-family:'Fraunces', serif; font-size: clamp(2rem,5vw,2.8rem); color:var(--teal-300); line-height:1; }
-  .hub .lbl{ font-size:0.78rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); margin-top:8px; }
-
-  .spoke{ position:absolute; top:50%; left:50%; width:0; height:0; }
   .tile{
-    position:absolute;
-    width: 148px; height: 148px;
+    width: 118px; height: 118px;
     display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
     gap:6px;
     border-radius: 18px;
@@ -126,6 +118,7 @@
     font-family:'Inter', sans-serif;
     cursor:pointer;
     padding:10px;
+    flex-shrink:0;
     transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
   }
   .tile:hover, .tile:focus-visible{
@@ -135,20 +128,15 @@
     outline:none;
   }
   .tile .tag{
-    font-size:0.78rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--teal-300);
+    font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--teal-300);
   }
-  .tile .name{ font-size:0.95rem; font-weight:600; line-height:1.25; }
+  .tile .name{ font-size:0.86rem; font-weight:600; line-height:1.2; }
 
-  /* narrow layout: abandon ring, use a grid */
-  .grid-fallback{ display:none; }
-  @media (max-width: 720px){
-    .ring-stage{ display:none; }
-    .grid-fallback{
-      display:grid; grid-template-columns: repeat(2, 1fr); gap:12px;
-      max-width:560px; margin: 30px auto 0;
-    }
-    .grid-fallback .tile{ position:static; width:auto; height:auto; aspect-ratio:1; }
+  .tiles-caption{
+    margin-top: 20px; display:flex; align-items:baseline; justify-content:center; gap:10px;
   }
+  .tiles-caption .num{ font-family:'Fraunces', serif; font-size:1.8rem; color:var(--teal-300); line-height:1; }
+  .tiles-caption .lbl{ font-size:0.8rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); }
 
   /* ---------- footer notes / info cards ---------- */
   .card-row{
@@ -314,27 +302,28 @@
 </div>
 
 <div id="view-indicators">
-  <section class="hero">
-    <h2>Health Career Compendium</h2>
-    <p>There are seven areas of information every report needs &ndash; use this webtool to find information you can trust.</p>
-    <div class="hint">For each information area, we have examples for two careers: Dentist and Certified Nursing Assistant.</div>
-
-    <div class="demo">
-      <div class="demo-head">
-        <span class="demo-title">This is what you'll see inside each information area, shown here for Wage &amp; Salary. Click Dentist or CNA to toggle between the two examples.</span>
-        <div class="demo-switch" id="demo-switch">
-          <button data-idx="0" class="active">Dentist</button>
-          <button data-idx="1">CNA</button>
-        </div>
-      </div>
-      <p id="demo-text">Bureau of Labor Statistics (BLS) data lists the national median annual wage for dentists at just under $180,000 per year. California wages for dental specialists run higher, reflecting regional demand.</p>
+  <div class="top-grid">
+    <div class="hero-box">
+      <h2>Health Career Compendium</h2>
+      <p>There are seven areas of information every report needs &ndash; use this webtool to find information you can trust.</p>
     </div>
-  </section>
-
-  <div class="ring-stage">
-    <div class="ring" id="ring"></div>
+    <div class="hero-side">
+      <div class="hint">For each information area, we have examples for two careers: Dentist and Certified Nursing Assistant.</div>
+      <div class="demo">
+        <div class="demo-head">
+          <span class="demo-title">This is what you'll see inside each information area, shown here for Wage &amp; Salary. Click Dentist or CNA to toggle between the two examples.</span>
+          <div class="demo-switch" id="demo-switch">
+            <button data-idx="0" class="active">Dentist</button>
+            <button data-idx="1">CNA</button>
+          </div>
+        </div>
+        <p id="demo-text">Bureau of Labor Statistics (BLS) data lists the national median annual wage for dentists at just under $180,000 per year. California wages for dental specialists run higher, reflecting regional demand.</p>
+      </div>
+    </div>
   </div>
-  <div class="grid-fallback" id="grid"></div>
+
+  <div class="tiles-row" id="tiles-row"></div>
+  <div class="tiles-caption"><span class="num" id="tiles-count"></span><span class="lbl">Comparison Areas</span></div>
 
   <div class="card-row">
     <div class="info-card">
@@ -566,38 +555,18 @@
 
   var EXAMPLE_CAREERS = ["Certified Nursing Assistant", "Dentist"];
 
-  var ring = document.getElementById('ring');
-  var grid = document.getElementById('grid');
+  var tilesRow = document.getElementById('tiles-row');
   var n = INDICATORS.length;
-  var startAngle = -90;
 
   INDICATORS.forEach(function(ind, i){
-    var angle = startAngle + (360 / n) * i;
-
-    var spoke = document.createElement('div');
-    spoke.className = 'spoke';
-    spoke.style.transform = 'rotate(' + angle + 'deg)';
-
     var tile = document.createElement('button');
     tile.className = 'tile';
-    tile.style.transform = 'translate(-50%,-50%) translate(265px,0) rotate(' + (-angle) + 'deg)';
     tile.innerHTML = '<span class="tag mono">' + ind.tag + '</span><span class="name">' + ind.name + '</span>';
     tile.addEventListener('click', function(){ openDrawer(i); });
-
-    spoke.appendChild(tile);
-    ring.appendChild(spoke);
-
-    var gtile = document.createElement('button');
-    gtile.className = 'tile';
-    gtile.innerHTML = '<span class="tag mono">' + ind.tag + '</span><span class="name">' + ind.name + '</span>';
-    gtile.addEventListener('click', function(){ openDrawer(i); });
-    grid.appendChild(gtile);
+    tilesRow.appendChild(tile);
   });
 
-  var hub = document.createElement('div');
-  hub.className = 'hub';
-  hub.innerHTML = '<div class="num">' + n + '</div><div class="lbl">Comparison Areas</div>';
-  ring.appendChild(hub);
+  document.getElementById('tiles-count').textContent = n;
 
   var clusterGrid = document.getElementById('cluster-grid');
   CLUSTERS.forEach(function(cluster){
