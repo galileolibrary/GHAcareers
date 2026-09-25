@@ -1,0 +1,719 @@
+<title>Health Career Profile Research</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  :root{
+    --ink-950:#0f1719;
+    --ink-900:#152023;
+    --ink-850:#1b2a2d;
+    --ink-800:#213234;
+    --line:#2c4144;
+    --line-soft:#1f3134;
+    --teal-300:#8fe9d9;
+    --teal-400:#5eead4;
+    --teal-600:#159c8a;
+    --teal-700:#0e7c6e;
+    --paper:#eef7f5;
+    --paper-dim:#c7dbd8;
+    --muted:#8fa9a6;
+    color-scheme: dark;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background: radial-gradient(1200px 800px at 50% -10%, var(--ink-850), var(--ink-950) 60%);
+    color: var(--paper);
+    font-family: 'Inter', system-ui, sans-serif;
+    padding-inline: 20px;
+    padding-block: 28px 60px;
+    line-height: 1.5;
+  }
+  h1,h2,h3{ font-family:'Fraunces', Georgia, serif; text-wrap: balance; margin: 0; }
+  a { color: var(--teal-300); }
+  .mono{ font-family:'IBM Plex Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+
+  /* ---------- header ---------- */
+  header{
+    max-width: 1000px; margin: 0 auto 8px;
+    display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap;
+  }
+  .brand{ display:flex; align-items:center; gap:12px; }
+  .brand-mark{
+    width:44px; height:44px; border-radius:12px;
+    background: linear-gradient(145deg, var(--teal-600), var(--ink-900));
+    border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .brand-mark svg{ width:22px; height:22px; }
+  .brand-text h1{ font-size:1.2rem; color:var(--paper); line-height:1.25; }
+  .brand-text p{ margin:4px 0 0; color:var(--muted); font-size:0.85rem; }
+  .legend{
+    font-size:0.78rem; color:var(--muted); text-align:right; max-width:260px;
+  }
+
+  /* ---------- tabs ---------- */
+  .tabbar{
+    max-width:1000px; margin: 22px auto 0; display:flex; justify-content:center;
+  }
+  .tabbar-inner{
+    display:inline-flex; gap:4px; padding:4px; border-radius:999px;
+    background: var(--ink-850); border:1px solid var(--line-soft);
+  }
+  .tabbar button{
+    font-family:'Inter',sans-serif; font-size:0.85rem; font-weight:600;
+    padding:8px 18px; border-radius:999px; border:none; cursor:pointer;
+    background:transparent; color:var(--muted);
+  }
+  .tabbar button.active{ background: var(--teal-600); color: var(--ink-950); }
+
+  [hidden]{ display:none !important; }
+
+  /* ---------- hero ---------- */
+  .hero{ max-width:1000px; margin: 28px auto 8px; text-align:center; }
+  .hero h2{ font-size: clamp(1.6rem, 3.4vw, 2.4rem); color:var(--paper); }
+  .hero p{ color:var(--paper-dim); max-width:600px; margin: 12px auto 0; font-size:0.98rem; }
+  .hero .hint{ color:var(--teal-300); font-size:0.85rem; margin-top:20px; font-weight:600; }
+
+  /* ---------- toggle demo (teaches the interaction) ---------- */
+  .demo{
+    max-width:420px; margin:14px auto 0;
+    border:1px solid var(--teal-700); border-radius:14px; padding:14px 16px; text-align:left;
+    background: linear-gradient(165deg, rgba(94,234,212,0.08), transparent 60%), var(--ink-850);
+  }
+  .demo .demo-head{ display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap; margin-bottom:10px; }
+  .demo .demo-title{ font-size:0.78rem; color:var(--muted); }
+  .demo-switch{ display:flex; gap:6px; }
+  .demo-switch button{
+    font-size:0.72rem; padding:5px 10px; border-radius:999px; cursor:pointer;
+    border:1px solid var(--line-soft); background:var(--ink-800); color:var(--paper-dim);
+  }
+  .demo-switch button.active{ background: var(--teal-600); border-color:var(--teal-600); color:var(--ink-950); font-weight:600; }
+  .demo p{ color:var(--paper); font-size:0.88rem; margin:0; max-width:none; }
+
+  /* ---------- ring layout ---------- */
+  .ring-stage{
+    max-width: 1000px; margin: 34px auto 0;
+    display:flex; justify-content:center;
+  }
+  .ring{
+    position:relative;
+    width: min(560px, 92vw);
+    aspect-ratio: 1;
+  }
+  .hub{
+    position:absolute; inset:0; margin:auto;
+    width: 34%; aspect-ratio:1; border-radius:50%;
+    background: radial-gradient(circle at 35% 30%, var(--ink-800), var(--ink-950) 75%);
+    border:1px solid var(--line);
+    box-shadow: 0 0 0 1px rgba(94,234,212,0.06), 0 20px 50px -20px rgba(0,0,0,0.7);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+    padding: 10px;
+  }
+  .hub .num{ font-family:'Fraunces', serif; font-size: clamp(1.6rem,4.4vw,2.2rem); color:var(--teal-300); line-height:1; }
+  .hub .lbl{ font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); margin-top:6px; }
+
+  .spoke{ position:absolute; top:50%; left:50%; width:0; height:0; }
+  .tile{
+    position:absolute;
+    width: 118px; height: 118px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+    gap:6px;
+    border-radius: 18px;
+    border:1px solid var(--line);
+    background: linear-gradient(160deg, var(--ink-800), var(--ink-900));
+    color: var(--paper);
+    font-family:'Inter', sans-serif;
+    cursor:pointer;
+    padding:10px;
+    transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  }
+  .tile:hover, .tile:focus-visible{
+    transform: scale(1.06);
+    border-color: var(--teal-400);
+    background: linear-gradient(160deg, var(--ink-850), var(--teal-700) 220%);
+    outline:none;
+  }
+  .tile .tag{
+    font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--teal-300);
+  }
+  .tile .name{ font-size:0.86rem; font-weight:600; line-height:1.2; }
+
+  /* narrow layout: abandon ring, use a grid */
+  .grid-fallback{ display:none; }
+  @media (max-width: 720px){
+    .ring-stage{ display:none; }
+    .grid-fallback{
+      display:grid; grid-template-columns: repeat(2, 1fr); gap:12px;
+      max-width:560px; margin: 30px auto 0;
+    }
+    .grid-fallback .tile{ position:static; width:auto; height:auto; aspect-ratio:1; }
+  }
+
+  /* ---------- footer notes / info cards ---------- */
+  .card-row{
+    max-width:900px; margin: 46px auto 0;
+    display:grid; grid-template-columns: 1fr 1fr; gap:16px;
+  }
+  @media (max-width: 720px){ .card-row{ grid-template-columns: 1fr; } }
+
+  .info-card{
+    border:1px solid var(--line); border-radius:14px; padding:18px 20px;
+    background: var(--ink-850);
+  }
+  .info-card h3{ font-size:1rem; color:var(--paper); margin-bottom:10px; }
+  .info-card ul{ margin:0; padding-left:18px; display:flex; flex-direction:column; gap:8px; }
+  .info-card li{ font-size:0.85rem; color:var(--paper-dim); }
+  .info-card li b{ color:var(--paper); }
+  .info-card.plain p{ font-size:0.92rem; color:var(--paper-dim); margin:0 0 8px; }
+  .info-card.plain p:last-child{ margin-bottom:0; }
+
+  footer{
+    max-width:1000px; margin: 30px auto 0; text-align:center;
+    color: var(--muted); font-size:0.76rem;
+  }
+
+  /* ---------- careers & clusters view ---------- */
+  .cluster-grid{
+    max-width:1000px; margin: 30px auto 0;
+    display:grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap:22px;
+  }
+  .cluster-card{
+    border:2px solid var(--teal-700); border-radius:14px; padding:16px 18px;
+    background: var(--ink-850);
+    box-shadow: 0 6px 18px -10px rgba(0,0,0,0.6);
+  }
+  .cluster-card h3{ font-size:0.95rem; color:var(--teal-300); margin-bottom:10px; }
+  .cluster-card ul{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:6px; }
+  .cluster-card li{
+    font-size:0.85rem; color:var(--paper-dim); padding:6px 8px; border-radius:8px;
+    display:flex; align-items:center; justify-content:space-between; gap:6px;
+  }
+  .cluster-card li.highlight{
+    background: rgba(94,234,212,0.1); border:1px solid var(--teal-700); color:var(--paper); font-weight:600;
+  }
+  .cluster-card li .badge{
+    font-size:0.62rem; letter-spacing:0.06em; text-transform:uppercase;
+    background: var(--teal-600); color: var(--ink-950); padding:2px 7px; border-radius:999px; font-weight:700;
+    flex-shrink:0;
+  }
+  .careers-legend{
+    max-width:1000px; margin:0 auto; text-align:center; color:var(--muted); font-size:0.85rem;
+  }
+
+  /* ---------- drawer ---------- */
+  .overlay{
+    position:fixed; inset:0; background: rgba(6,10,11,0.6);
+    backdrop-filter: blur(2px);
+    opacity:0; pointer-events:none; transition: opacity 0.2s ease;
+    z-index:40;
+  }
+  .overlay.open{ opacity:1; pointer-events:auto; }
+
+  .drawer{
+    position:fixed; top:0; right:0; height:100%;
+    width: min(480px, 100vw);
+    background: var(--ink-900);
+    border-left:1px solid var(--line);
+    box-shadow: -30px 0 60px -30px rgba(0,0,0,0.6);
+    transform: translateX(100%);
+    transition: transform 0.25s ease;
+    z-index:50;
+    display:flex; flex-direction:column;
+    padding-block: calc(20px + env(safe-area-inset-top,0px)) calc(20px + env(safe-area-inset-bottom,0px));
+  }
+  .drawer.open{ transform: translateX(0); }
+  @media (max-width: 720px){
+    .drawer{
+      top:auto; bottom:0; right:0; left:0; height: min(88vh, 760px);
+      width:100%; border-left:none; border-top:1px solid var(--line);
+      border-radius: 18px 18px 0 0;
+      transform: translateY(100%);
+    }
+    .drawer.open{ transform: translateY(0); }
+  }
+
+  .drawer-head{
+    display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
+    padding-inline:22px; padding-bottom:14px; border-bottom:1px solid var(--line-soft);
+  }
+  .drawer-head .tag{ color:var(--teal-300); font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; }
+  .drawer-head h3{ font-size:1.3rem; margin-top:4px; color:var(--paper); }
+  .drawer-close{
+    background: var(--ink-800); border:1px solid var(--line); color:var(--paper);
+    width:32px; height:32px; border-radius:9px; cursor:pointer; flex-shrink:0;
+    font-size:1rem; line-height:1;
+  }
+  .drawer-close:hover{ border-color:var(--teal-400); color:var(--teal-300); }
+
+  .drawer-body{ overflow-y:auto; padding-inline:22px; padding-top:16px; }
+  .drawer-body section{ margin-bottom: 22px; }
+  .drawer-body h4{
+    font-family:'Inter',sans-serif; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase;
+    color: var(--muted); margin: 0 0 8px;
+  }
+  .drawer-body p{ margin:0 0 8px; color: var(--paper-dim); font-size:0.92rem; }
+
+  .src-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px; }
+  .src-list li{
+    border:1px solid var(--line-soft); border-radius:12px; padding:10px 12px;
+    background: var(--ink-850);
+  }
+  .src-list .src-name{ font-weight:600; color:var(--paper); font-size:0.88rem; }
+  .src-list .src-use{ color:var(--paper-dim); font-size:0.83rem; margin-top:4px; }
+
+  .example-card{
+    border:1px solid var(--teal-700); border-radius:14px; padding:14px 16px;
+    background: linear-gradient(165deg, rgba(94,234,212,0.08), transparent 60%), var(--ink-850);
+  }
+  .example-card .who{
+    display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:10px; flex-wrap:wrap;
+  }
+  .example-card .who-name{ display:flex; align-items:center; gap:8px; }
+  .example-card .who .chip{
+    font-size:0.68rem; letter-spacing:0.08em; text-transform:uppercase;
+    background: var(--teal-600); color: var(--ink-950); padding:3px 9px; border-radius:999px; font-weight:700;
+  }
+  .example-card .who .career{ font-family:'Fraunces', serif; font-size:1.05rem; color:var(--paper); }
+  .example-switch{ display:flex; gap:6px; }
+  .example-switch button{
+    font-size:0.72rem; padding:5px 10px; border-radius:999px; cursor:pointer;
+    border:1px solid var(--line-soft); background:var(--ink-800); color:var(--paper-dim);
+  }
+  .example-switch button.active{
+    background: var(--teal-600); border-color:var(--teal-600); color:var(--ink-950); font-weight:600;
+  }
+  .example-card .finding{ color:var(--paper); font-size:0.9rem; }
+  .example-card .finding ul{ margin:0; padding-left:18px; display:flex; flex-direction:column; gap:6px; }
+  .example-card .cite{
+    display:block; margin-top:8px; color:var(--muted); font-size:0.76rem;
+  }
+</style>
+
+<header>
+  <div class="brand">
+    <div class="brand-mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#8fe9d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="10" cy="10" r="6"></circle>
+        <line x1="20" y1="20" x2="14.7" y2="14.7"></line>
+      </svg>
+    </div>
+    <div class="brand-text">
+      <h1>Health Career Profile Research</h1>
+      <p>Companion tool for the Consumer Reports&ndash;style career compendium</p>
+    </div>
+  </div>
+  <div class="legend">Click any information area to see what it means, where to find real data for it, and an example already filled in.</div>
+</header>
+
+<div class="tabbar">
+  <div class="tabbar-inner">
+    <button id="tab-btn-indicators" class="active">Information Areas</button>
+    <button id="tab-btn-careers">Careers &amp; Clusters</button>
+  </div>
+</div>
+
+<div id="view-indicators">
+  <section class="hero">
+    <h2>Health Career Compendium</h2>
+    <p>There are seven areas of information every report needs &ndash; use this webtool to find information you can trust.</p>
+    <div class="hint">For each information area, we have examples for two careers: Dentist and Certified Nursing Assistant.</div>
+
+    <div class="demo">
+      <div class="demo-head">
+        <span class="demo-title">This is what you'll see inside each information area, shown here for Wage &amp; Salary. Click Dentist or CNA to toggle between the two examples.</span>
+        <div class="demo-switch" id="demo-switch">
+          <button data-idx="0" class="active">Dentist</button>
+          <button data-idx="1">CNA</button>
+        </div>
+      </div>
+      <p id="demo-text">Bureau of Labor Statistics (BLS) data lists the national median annual wage for dentists at just under $180,000 per year. California wages for dental specialists run higher, reflecting regional demand.</p>
+    </div>
+  </section>
+
+  <div class="ring-stage">
+    <div class="ring" id="ring"></div>
+  </div>
+  <div class="grid-fallback" id="grid"></div>
+
+  <div class="card-row">
+    <div class="info-card">
+      <h3>Sources used in this tool</h3>
+      <ul>
+        <li><b>O*NET OnLine</b> (onetonline.org). A federally funded database of detailed occupation information: tasks, related jobs, wages, and work context.</li>
+        <li><b>BLS Occupational Outlook Handbook</b> (bls.gov/ooh). The federal government's occupational reference for pay, job outlook, and work environment. Updated on a regular schedule.</li>
+        <li><b>CA EDD Labor Market Information</b> (labormarketinfo.edd.ca.gov). California specific wage and employment projections, including regional Bay Area data.</li>
+        <li><b>State licensing boards</b> (for example the Dental Board of California, or the California Department of Public Health). The official agencies that set and publish licensing and certification requirements.</li>
+        <li><b>CareerOneStop License Finder</b>. A federal tool that points you to the correct state licensing board when you can't find it directly.</li>
+      </ul>
+    </div>
+    <div class="info-card plain">
+      <h3>So you asked Google for an answer?</h3>
+      <p>The sources listed here are trusted and vetted.</p>
+      <p>Start there instead, but if you do use Google, please check the SOURCE of the AI Overview and let us know WHY you trust it.</p>
+    </div>
+  </div>
+
+  <footer>Built for the Galileo Health Academy 2026&ndash;2027</footer>
+</div>
+
+<div id="view-careers" hidden>
+  <section class="hero">
+    <h2>Career Clusters</h2>
+    <p class="careers-legend">Every career your group could choose, grouped by cluster. Dentist and Certified Nursing Assistant are marked because they're the two examples used throughout the Information Areas tab.</p>
+  </section>
+  <div class="cluster-grid" id="cluster-grid"></div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+<div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+  <div class="drawer-head">
+    <div>
+      <div class="tag" id="drawer-tag">Indicator</div>
+      <h3 id="drawer-title">&nbsp;</h3>
+    </div>
+    <button class="drawer-close" id="drawer-close" aria-label="Close">&times;</button>
+  </div>
+  <div class="drawer-body" id="drawer-body"></div>
+</div>
+
+<script>
+(function(){
+  var INDICATORS = [
+    {
+      tag: "1",
+      name: "Education & Training Pathway",
+      what: "How much school or training this career actually requires, and what kind: a certificate, an associate degree, a bachelor's degree, or a graduate or professional degree. Also roughly how many years it takes.",
+      sources: [
+        {name:"O*NET OnLine, Job Zone tab", use:"Search the career title at onetonline.org and open its profile. The Job Zone section describes how much preparation the career needs."},
+        {name:"O*NET OnLine, Education tab", use:"Shows the percentage of people currently in this job at each education level. This is a real survey, not a guess."}
+      ],
+      howFind: "Search the career title at onetonline.org. Open its profile. Click the Job Zone tab.",
+      howReport: "State the type of degree required and about how many total years of school it takes.",
+      examples: [
+        {
+          label: "Dentist",
+          finding: "Requires a Doctor of Dental Surgery or Doctor of Dental Medicine degree, which follows a bachelor's degree. About 8 years of school after high school in total.",
+          cite: "O*NET OnLine, SOC 29-1021.00, Dentists General profile."
+        },
+        {
+          label: "CNA",
+          finding: "Requires completing a state-approved training program, typically 75 to 150 hours, plus passing a competency exam. This is a short-term certificate, not a college degree.",
+          cite: "O*NET OnLine, SOC 31-1131.00, Nursing Assistants profile."
+        }
+      ]
+    },
+    {
+      tag: "2",
+      name: "Licensing & Certification",
+      what: "The legal requirements to practice: which state agency licenses this career, what exam or exams are required, and any renewal rules.",
+      sources: [
+        {name:"State licensing board site", use:"Every regulated health career has one, for example the Dental Board of California or the California Department of Public Health. Search for the career name plus California board."},
+        {name:"O*NET OnLine, Licensing tab", use:"Links out to CareerOneStop's License Finder, a good second check if you can't find the board yourself."}
+      ],
+      howFind: "Identify the correct state board for the career. Find a page called something like Applicants or Licensing Requirements.",
+      howReport: "List the required degree, the exam or exams by name, and how often the license must be renewed.",
+      examples: [
+        {
+          label: "Dentist",
+          finding: [
+            "Graduate from a CODA-accredited dental program (DDS or DMD)",
+            "Pass the INBDE, the Integrated National Board Dental Examination",
+            "Pass a clinical licensing exam (WREB), or complete an accredited PGY-1 residency instead",
+            "Pass California's Law and Ethics Exam"
+          ],
+          cite: "Dental Board of California, dbc.ca.gov, Applicants and Licensing pages."
+        },
+        {
+          label: "CNA",
+          finding: [
+            "Complete a CDPH-approved Certified Nursing Assistant training program",
+            "Pass the CNA competency exam, a written test plus a skills demonstration",
+            "Apply for certification through the California Department of Public Health",
+            "Renew certification every two years with continuing education and proof of employment"
+          ],
+          cite: "California Department of Public Health, Aide and Technician Certification Section."
+        }
+      ]
+    },
+    {
+      tag: "3",
+      name: "Wage & Salary Data",
+      what: "What this career typically pays, both nationally and in California specifically. Pay and cost of living vary a lot by state and region.",
+      sources: [
+        {name:"BLS Occupational Outlook Handbook", use:"bls.gov/ooh. Search the career and open the Pay section for the national median annual wage."},
+        {name:"CA EDD Labor Market Information", use:"labormarketinfo.edd.ca.gov. Search wages for the occupation to get California and Bay Area regional figures."}
+      ],
+      howFind: "Search the career at bls.gov/ooh, then search the same career at labormarketinfo.edd.ca.gov.",
+      howReport: "Write the national median wage and the California wage side by side. Always include the year the number came from.",
+      examples: [
+        {
+          label: "Dentist",
+          finding: "Bureau of Labor Statistics (BLS) data lists the national median annual wage for dentists at just under $180,000 per year. California wages for dental specialists run higher, reflecting regional demand.",
+          cite: "BLS Occupational Outlook Handbook, bls.gov/ooh/healthcare/dentists.htm."
+        },
+        {
+          label: "CNA",
+          finding: "Bureau of Labor Statistics (BLS) data lists the national median annual wage for nursing assistants at just under $40,000 per year. California wages tend to run higher due to cost of living and demand.",
+          cite: "BLS Occupational Outlook Handbook, bls.gov/ooh/healthcare/nursing-assistants-and-orderlies.htm."
+        }
+      ]
+    },
+    {
+      tag: "4",
+      name: "Job Outlook & Growth",
+      what: "How much employment in this career is projected to grow or shrink over the next ten years, and whether that is faster, slower, or about as fast as average.",
+      sources: [
+        {name:"BLS Occupational Outlook Handbook", use:"The Job Outlook section states a percent change and a ten year window, for example 6% from 2024 to 2034, faster than average."},
+        {name:"CA EDD LMI, Occupational Projections", use:"California specific ten year projections, often broken out by region including the Bay Area."}
+      ],
+      howFind: "On the same BLS OOH page, open the Job Outlook section.",
+      howReport: "Write the percent change, the years it covers, and whether that is faster, slower, or about average. About 4% is roughly the all-occupation average right now.",
+      examples: [
+        {
+          label: "Dentist",
+          finding: "The Bureau of Labor Statistics (BLS) projects employment for dentists to grow faster than the average for all occupations over the current ten year window.",
+          cite: "BLS OOH, bls.gov/ooh/healthcare/dentists.htm, Job Outlook section."
+        },
+        {
+          label: "CNA",
+          finding: "The Bureau of Labor Statistics (BLS) projects employment for nursing assistants to grow about as fast as or faster than average, driven largely by an aging population that needs long-term care.",
+          cite: "BLS OOH, bls.gov/ooh/healthcare/nursing-assistants-and-orderlies.htm, Job Outlook section."
+        }
+      ]
+    },
+    {
+      tag: "5",
+      name: "Day-to-Day Duties",
+      what: "What someone in this career actually does during a typical day or week. Real tasks, not a vague job title description.",
+      sources: [
+        {name:"O*NET OnLine, Tasks tab", use:"Lists specific task statements, ranked by how important or frequent they are."},
+        {name:"BLS OOH, What They Do section", use:"A shorter, plain language summary of core duties."}
+      ],
+      howFind: "On the O*NET profile, open the Tasks tab.",
+      howReport: "Pick four to six real tasks in the source's own words. Avoid vague summaries like 'helps patients.'",
+      examples: [
+        {
+          label: "Dentist",
+          finding: "Diagnose and treat problems with teeth, gums, and related mouth structures. Remove decay and place fillings. Examine dental X-rays. Administer local anesthetics. Prescribe medications. In private practice, also supervise dental hygienists and assistants and manage the business side of the office.",
+          cite: "O*NET OnLine, SOC 29-1021.00, Tasks tab; BLS OOH, What Dentists Do."
+        },
+        {
+          label: "CNA",
+          finding: "Monitor and record patients' vital signs. Help patients bathe, dress, and eat. Turn and reposition patients who cannot move on their own. Answer patient calls and report changes to nurses. Assist with basic medical procedures under supervision.",
+          cite: "O*NET OnLine, SOC 31-1131.00, Tasks tab."
+        }
+      ]
+    },
+    {
+      tag: "6",
+      name: "Career Advancement",
+      what: "How someone grows in this career over time: promotions, specializations, or related careers reachable with more training.",
+      sources: [
+        {name:"O*NET OnLine, Related Occupations tab", use:"Lists occupations people in this career often move into, plus their SOC codes so you can look each one up."}
+      ],
+      howFind: "On the O*NET profile, open the Related Occupations tab.",
+      howReport: "Name two or three related or 'next step' occupations, and what extra training each one needs.",
+      examples: [
+        {
+          label: "Dentist",
+          finding: "A general dentist can pursue a specialty residency such as orthodontics, oral and maxillofacial surgery, or periodontics. Some move into teaching at a dental school. Others open and own a private practice, taking on management responsibilities over hygienists and assistants.",
+          cite: "O*NET OnLine, SOC 29-1021.00, Related Occupations tab."
+        },
+        {
+          label: "CNA",
+          finding: "A CNA can move into a Licensed Vocational Nurse program, and from there into a Registered Nurse program. Each step requires additional schooling and its own licensing exam.",
+          cite: "O*NET OnLine, SOC 31-1131.00, Related Occupations tab."
+        }
+      ]
+    },
+    {
+      tag: "7",
+      name: "Work Schedule & Flexibility",
+      what: "Typical weekly hours, shift patterns, and how much control a person in this career usually has over their own schedule.",
+      sources: [
+        {name:"O*NET OnLine, Work Context tab", use:"Answers survey questions like how often the job requires evening or weekend work and how much freedom workers have to set their own schedule."},
+        {name:"BLS OOH, Work Environment section", use:"Plain language notes on typical hours and self-employment rates."}
+      ],
+      howFind: "On the O*NET profile, open the Work Context tab. Also check the Work Environment section on BLS OOH.",
+      howReport: "Note typical hours, evening or weekend work, and how much control workers have over their schedule.",
+      examples: [
+        {
+          label: "Dentist",
+          finding: "Many dentists work less than 40 hours a week, though schedules vary and can include evenings or weekends. A meaningful share of dentists are self-employed practice owners, which increases schedule control but adds business responsibilities.",
+          cite: "BLS OOH, bls.gov/ooh/healthcare/dentists.htm, Work Environment section."
+        },
+        {
+          label: "CNA",
+          finding: "CNAs often work in hospitals or nursing homes that operate around the clock, so shifts can include nights, weekends, and holidays. The work is physically demanding, and both full-time and part-time positions are common.",
+          cite: "BLS OOH, bls.gov/ooh/healthcare/nursing-assistants-and-orderlies.htm, Work Environment section."
+        }
+      ]
+    }
+  ];
+
+  var CLUSTERS = [
+    { name: "Direct Patient Care", careers: ["Registered Nurse","Licensed Vocational Nurse","Certified Nursing Assistant","Nurse Practitioner","Nurse Manager / Supervisor","Clinical Nurse Specialist","Medical Assistant","Physician Assistant","Nurse Anesthetist","Physician / Doctor"] },
+    { name: "Diagnostic & Imaging", careers: ["Radiologic Technologist","Radiologic Technologist Lead","Diagnostic Medical Sonographer","MRI Technologist","X-Ray Laboratory Aide"] },
+    { name: "Rehabilitation Therapy", careers: ["Physical Therapist Assistant","Occupational Therapy Assistant","Respiratory Therapist","Physical Therapist","Occupational Therapist","Speech-Language Pathologist","Therapy Aide"] },
+    { name: "Public & Community Health", careers: ["Community Health Worker","Health Educator","Epidemiologist","Public Health Nurse","Health Program Coordinator","Medical Scientist / Researcher","Biostatistician"] },
+    { name: "Mental & Behavioral Health", careers: ["Psychiatric Technician","Marriage & Family Therapist","Substance Abuse Counselor","Behavioral Health Clinician","Clinical Psychologist","Medical Social Worker","Patient Navigator"] },
+    { name: "Health Care Administration", careers: ["Medical & Health Services Manager","Medical Billing & Coding Specialist","Health Care Analyst","Administrative Analyst","Medical Evaluations Assistant","Hospital Administrator / Medical Director"] },
+    { name: "Emergency & Surgical Support", careers: ["EMT / Paramedic","Surgical Technologist","Emergency Room Technician","Unit Clerk"] },
+    { name: "Lab Science & Biotechnology", careers: ["Clinical Laboratory Technologist","Phlebotomist","Biomedical Equipment Technician","Pharmacist","Geneticist / Genetic Counselor"] },
+    { name: "Dental Health", careers: ["Dental Assistant","Dental Hygienist","Dentist","Orthodontist","Oral and Maxillofacial Surgeon"] }
+  ];
+
+  var EXAMPLE_CAREERS = ["Certified Nursing Assistant", "Dentist"];
+
+  var ring = document.getElementById('ring');
+  var grid = document.getElementById('grid');
+  var n = INDICATORS.length;
+  var startAngle = -90;
+
+  INDICATORS.forEach(function(ind, i){
+    var angle = startAngle + (360 / n) * i;
+
+    var spoke = document.createElement('div');
+    spoke.className = 'spoke';
+    spoke.style.transform = 'rotate(' + angle + 'deg)';
+
+    var tile = document.createElement('button');
+    tile.className = 'tile';
+    tile.style.transform = 'translate(-50%,-50%) translate(190px,0) rotate(' + (-angle) + 'deg)';
+    tile.innerHTML = '<span class="tag mono">' + ind.tag + '</span><span class="name">' + ind.name + '</span>';
+    tile.addEventListener('click', function(){ openDrawer(i); });
+
+    spoke.appendChild(tile);
+    ring.appendChild(spoke);
+
+    var gtile = document.createElement('button');
+    gtile.className = 'tile';
+    gtile.innerHTML = '<span class="tag mono">' + ind.tag + '</span><span class="name">' + ind.name + '</span>';
+    gtile.addEventListener('click', function(){ openDrawer(i); });
+    grid.appendChild(gtile);
+  });
+
+  var hub = document.createElement('div');
+  hub.className = 'hub';
+  hub.innerHTML = '<div class="num">' + n + '</div><div class="lbl">Comparison Areas</div>';
+  ring.appendChild(hub);
+
+  var clusterGrid = document.getElementById('cluster-grid');
+  CLUSTERS.forEach(function(cluster){
+    var card = document.createElement('div');
+    card.className = 'cluster-card';
+    var items = cluster.careers.map(function(c){
+      var isExample = EXAMPLE_CAREERS.indexOf(c) !== -1;
+      return '<li class="' + (isExample ? 'highlight' : '') + '"><span>' + c + '</span>' + (isExample ? '<span class="badge">Example</span>' : '') + '</li>';
+    }).join('');
+    card.innerHTML = '<h3>' + cluster.name + '</h3><ul>' + items + '</ul>';
+    clusterGrid.appendChild(card);
+  });
+
+  var overlay = document.getElementById('overlay');
+  var drawer = document.getElementById('drawer');
+  var drawerTag = document.getElementById('drawer-tag');
+  var drawerTitle = document.getElementById('drawer-title');
+  var drawerBody = document.getElementById('drawer-body');
+  var closeBtn = document.getElementById('drawer-close');
+
+  function renderFinding(finding){
+    if (Array.isArray(finding)) {
+      return '<ul>' + finding.map(function(f){ return '<li>' + f + '</li>'; }).join('') + '</ul>';
+    }
+    return finding;
+  }
+
+  function openDrawer(i){
+    var ind = INDICATORS[i];
+    var activeEx = 0;
+
+    drawerTag.textContent = 'Information Area ' + ind.tag;
+    drawerTitle.textContent = ind.name;
+
+    var srcHtml = ind.sources.map(function(s){
+      return '<li><div class="src-name">' + s.name + '</div><div class="src-use">' + s.use + '</div></li>';
+    }).join('');
+
+    function exampleBlock(){
+      var ex = ind.examples[activeEx];
+      var switchHtml = ind.examples.map(function(e, idx){
+        return '<button data-idx="' + idx + '" class="' + (idx === activeEx ? 'active' : '') + '">' + e.label + '</button>';
+      }).join('');
+      return (
+        '<div class="who"><div class="who-name"><span class="chip">Example</span><span class="career">' + ex.label + '</span></div>' +
+        '<div class="example-switch">' + switchHtml + '</div></div>' +
+        '<div class="finding">' + renderFinding(ex.finding) + '</div>' +
+        '<span class="cite mono">' + ex.cite + '</span>'
+      );
+    }
+
+    function render(){
+      drawerBody.innerHTML =
+        '<section><h4>What it is</h4><p>' + ind.what + '</p></section>' +
+        '<section><h4>Reliable sources</h4><ul class="src-list">' + srcHtml + '</ul></section>' +
+        '<section><h4>How to find it</h4><p>' + ind.howFind + '</p></section>' +
+        '<section><h4>How to report it</h4><p>' + ind.howReport + '</p></section>' +
+        '<section><h4>Example</h4><div class="example-card">' + exampleBlock() + '</div></section>';
+
+      var buttons = drawerBody.querySelectorAll('.example-switch button');
+      buttons.forEach(function(btn){
+        btn.addEventListener('click', function(){
+          activeEx = parseInt(btn.getAttribute('data-idx'), 10);
+          render();
+        });
+      });
+    }
+
+    render();
+    overlay.classList.add('open');
+    drawer.classList.add('open');
+    closeBtn.focus();
+  }
+
+  function closeDrawer(){
+    overlay.classList.remove('open');
+    drawer.classList.remove('open');
+  }
+
+  overlay.addEventListener('click', closeDrawer);
+  closeBtn.addEventListener('click', closeDrawer);
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') closeDrawer();
+  });
+
+  /* hero demo toggle */
+  var demoTexts = [
+    "Bureau of Labor Statistics (BLS) data lists the national median annual wage for dentists at just under $180,000 per year. California wages for dental specialists run higher, reflecting regional demand.",
+    "Bureau of Labor Statistics (BLS) data lists the national median annual wage for nursing assistants at just under $40,000 per year. California wages tend to run higher due to cost of living and demand."
+  ];
+  var demoSwitch = document.getElementById('demo-switch');
+  var demoText = document.getElementById('demo-text');
+  demoSwitch.querySelectorAll('button').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      demoSwitch.querySelectorAll('button').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      demoText.textContent = demoTexts[parseInt(btn.getAttribute('data-idx'), 10)];
+    });
+  });
+
+  /* tabs */
+  var tabIndicators = document.getElementById('tab-btn-indicators');
+  var tabCareers = document.getElementById('tab-btn-careers');
+  var viewIndicators = document.getElementById('view-indicators');
+  var viewCareers = document.getElementById('view-careers');
+  tabIndicators.addEventListener('click', function(){
+    tabIndicators.classList.add('active');
+    tabCareers.classList.remove('active');
+    viewIndicators.hidden = false;
+    viewCareers.hidden = true;
+  });
+  tabCareers.addEventListener('click', function(){
+    tabCareers.classList.add('active');
+    tabIndicators.classList.remove('active');
+    viewCareers.hidden = false;
+    viewIndicators.hidden = true;
+  });
+})();
+</script>
