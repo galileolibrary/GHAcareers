@@ -1,4 +1,4 @@
-<title>Health Career Profile Research</title>
+<title>Health Career Explorer Project</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
@@ -279,7 +279,92 @@
   .example-card .cite{
     display:block; margin-top:8px; color:var(--muted); font-size:0.76rem;
   }
+
+  /* ---------- project home ---------- */
+  .home{ max-width:1320px; margin:28px auto 0; display:flex; flex-direction:column; gap:34px; }
+
+  .home-hero{
+    display:grid; grid-template-columns: 1.1fr 1fr; gap:40px; align-items:center;
+    border:1px solid var(--line); border-radius:20px; padding:44px 46px;
+    background: radial-gradient(700px 360px at 85% 20%, rgba(94,234,212,0.07), transparent 70%), var(--ink-850);
+  }
+  @media (max-width: 920px){ .home-hero{ grid-template-columns:1fr; padding:30px 24px; gap:28px; } }
+  .home-hero h2{ font-size: clamp(2.1rem, 4vw, 3.3rem); line-height:1.08; color:var(--paper); margin-bottom:22px; }
+  .home-hero p{ margin:0 0 16px; color:var(--paper-dim); font-size:1.05rem; max-width:62ch; }
+  .home-hero p.hook{
+    font-family:'Fraunces', Georgia, serif; font-weight:600; color:var(--teal-300);
+    font-size: clamp(1.25rem, 2vw, 1.6rem); line-height:1.3; margin:24px 0; max-width:30ch; text-wrap:balance;
+  }
+  .home-hero p:last-child{ margin-bottom:0; }
+
+  /* constellation of the nine clusters */
+  .cosmos{
+    position:relative; width:100%; aspect-ratio: 1 / 0.95; min-height:340px;
+    border:1px solid var(--line-soft); border-radius:18px; overflow:hidden;
+    background: radial-gradient(circle at 50% 48%, rgba(94,234,212,0.10), transparent 62%), var(--ink-900);
+  }
+  .cosmos svg{ position:absolute; inset:0; width:100%; height:100%; }
+  .cosmos line{ stroke: var(--teal-700); stroke-width:1; opacity:0.55; vector-effect: non-scaling-stroke; }
+  .node{
+    position:absolute; left:var(--x); top:var(--y); transform:translate(-50%,-50%);
+    font-family:'Inter',sans-serif; font-size:0.74rem; font-weight:600; white-space:nowrap;
+    padding:6px 12px; border-radius:999px; cursor:pointer;
+    border:1px solid var(--teal-700); background:var(--ink-850); color:var(--paper-dim);
+    transition: border-color .15s ease, color .15s ease, background .15s ease;
+  }
+  .node::before{
+    content:""; display:inline-block; width:7px; height:7px; border-radius:50%;
+    background:var(--teal-400); margin-right:8px; vertical-align:middle;
+  }
+  .node:hover, .node:focus-visible{ border-color:var(--teal-400); color:var(--paper); background:var(--ink-800); outline:none; }
+  @media (max-width: 920px){
+    .cosmos{ aspect-ratio:auto; min-height:0; display:flex; flex-wrap:wrap; gap:8px; padding:16px; }
+    .cosmos svg{ display:none; }
+    .node{ position:static; transform:none; }
+  }
+
+  /* what / who / why / how */
+  .wwwh{ display:grid; grid-template-columns: 1fr 1fr; gap:20px; }
+  @media (max-width: 760px){ .wwwh{ grid-template-columns:1fr; } }
+  .qcard{
+    border:1px solid var(--line); border-radius:16px; padding:26px 28px; background:var(--ink-850);
+    display:flex; flex-direction:column; gap:12px;
+  }
+  .qcard h3{ font-size:1.5rem; letter-spacing:0.08em; color:var(--teal-300); }
+  .qcard p{ margin:0; color:var(--paper); font-size:1.02rem; max-width:60ch; }
+  .wf-chip{
+    display:inline-block; margin-left:6px; vertical-align:middle;
+    font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:0.66rem; letter-spacing:0.06em;
+    color:#f0b25e; border:1px dashed rgba(240,178,94,0.6); border-radius:999px; padding:1px 8px;
+  }
+
+  /* timeline */
+  .tl-head{ font-size: clamp(1.6rem, 2.4vw, 2rem); color:var(--paper); margin-bottom:18px; }
+  .tl{ position:relative; display:grid; grid-template-columns: repeat(3, 1fr); gap:20px; }
+  .tl::before{
+    content:""; position:absolute; top:19px; left:calc(100%/6); right:calc(100%/6); height:2px; background:var(--line);
+  }
+  @media (max-width: 860px){ .tl{ grid-template-columns:1fr; } .tl::before{ display:none; } }
+  .tl-step{ position:relative; display:flex; flex-direction:column; align-items:center; gap:14px; }
+  .tl-step .num{
+    width:40px; height:40px; border-radius:50%; background:var(--teal-600); color:var(--ink-950);
+    font-family:'Fraunces',serif; font-weight:700; font-size:1.15rem;
+    display:flex; align-items:center; justify-content:center; position:relative; z-index:1;
+    box-shadow: 0 0 0 6px var(--ink-950);
+  }
+  @media (max-width: 860px){ .tl-step{ align-items:stretch; } .tl-step .num{ box-shadow:none; } }
+  .tl-card{
+    width:100%; border:1px solid var(--line); border-radius:16px; padding:22px 24px; background:var(--ink-850);
+    display:flex; flex-direction:column; gap:12px; flex:1;
+  }
+  .tl-card h3{ font-size:1.25rem; color:var(--paper); }
+  .when{
+    align-self:flex-start; font-weight:600; font-size:0.86rem; color:var(--teal-300);
+    border:1px solid var(--teal-700); background: rgba(94,234,212,0.08); border-radius:999px; padding:5px 13px;
+  }
+  .tl-card p{ margin:0; color:var(--paper-dim); font-size:0.98rem; }
 </style>
+
 
 <header>
   <div class="brand">
@@ -290,8 +375,8 @@
       </svg>
     </div>
     <div class="brand-text">
-      <h1>Health Career Profile Research</h1>
-      <p>Companion tool for the Consumer Reports&ndash;style career compendium</p>
+      <h1>Health Career Explorer Project</h1>
+      <p>Companion Hub for Galileo Health Academy Career Exploration</p>
     </div>
   </div>
   <div class="legend">Click any information area to see what it means, where to find real data for it, and an example already filled in.</div>
@@ -299,12 +384,79 @@
 
 <div class="tabbar">
   <div class="tabbar-inner">
-    <button id="tab-btn-indicators" class="active">Information Areas</button>
+    <button id="tab-btn-home" class="active">Project Home</button>
+    <button id="tab-btn-indicators">Information Areas</button>
     <button id="tab-btn-careers">Careers &amp; Clusters</button>
   </div>
 </div>
 
-<div id="view-indicators">
+<div id="view-home">
+  <div class="home">
+    <section class="home-hero">
+      <div>
+        <h2>Welcome to the Health Career Explorer Project</h2>
+        <p>The universe of health careers is vast. There are so many different kinds of work, from patient-facing clinical care to emergency medicine and paramedic work to laboratory technicians to health service administrators.</p>
+        <p class="hook">How do you know what career might fit your life and your goals?</p>
+        <p>This project will have you team up to explore a career while you develop the skills that let you explore the universe of health careers on your own.</p>
+      </div>
+      <div class="cosmos" aria-label="The nine career clusters">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><line x1="32" y1="10" x2="56" y2="30"/><line x1="76" y1="16" x2="56" y2="30"/><line x1="56" y1="30" x2="27" y2="38"/><line x1="56" y1="30" x2="72" y2="46"/><line x1="27" y1="38" x2="42" y2="54"/><line x1="72" y1="46" x2="42" y2="54"/><line x1="72" y1="46" x2="70" y2="62"/><line x1="42" y1="54" x2="70" y2="62"/><line x1="42" y1="54" x2="28" y2="70"/><line x1="70" y1="62" x2="60" y2="84"/><line x1="28" y1="70" x2="60" y2="84"/><line x1="27" y1="38" x2="28" y2="70"/></svg>
+        <button class="node" style="--x:32%;--y:10%" data-goto="careers">Direct Patient Care</button><button class="node" style="--x:76%;--y:16%" data-goto="careers">Dental Health</button><button class="node" style="--x:56%;--y:30%" data-goto="careers">Emergency &amp; Surgical Support</button><button class="node" style="--x:27%;--y:38%" data-goto="careers">Diagnostic &amp; Imaging</button><button class="node" style="--x:72%;--y:46%" data-goto="careers">Rehabilitation Therapy</button><button class="node" style="--x:42%;--y:54%" data-goto="careers">Lab Science &amp; Biotechnology</button><button class="node" style="--x:70%;--y:62%" data-goto="careers">Public &amp; Community Health</button><button class="node" style="--x:28%;--y:70%" data-goto="careers">Mental &amp; Behavioral Health</button><button class="node" style="--x:60%;--y:84%" data-goto="careers">Health Care Administration</button>
+      </div>
+    </section>
+
+    <section class="wwwh">
+      <div class="qcard">
+        <h3>WHAT</h3>
+        <p>You and your group will deliver 4 completed slides using the template provided</p>
+      </div>
+      <div class="qcard">
+        <h3>WHO</h3>
+        <p>Your group will be assigned by Mr. Biorn</p>
+      </div>
+      <div class="qcard">
+        <h3>WHY</h3>
+        <p>Your journey into the world of health careers can take so many different paths, we want you to build the skills to explore and compare different options.</p>
+      </div>
+      <div class="qcard">
+        <h3>HOW</h3>
+        <p>Use the <a href="#" data-goto="indicators">Research Hub</a> to explore the seven information areas so that you can make standardized comparisons between health careers</p>
+      </div>
+    </section>
+
+    <section>
+      <h3 class="tl-head">Timeline</h3>
+      <div class="tl">
+        <div class="tl-step">
+          <div class="num">1</div>
+          <div class="tl-card">
+            <h3>Introduction</h3>
+            <span class="when">Tuesday, 10/20</span>
+            <p>Meet in the Library (room 356) for project introduction and group assignment</p>
+          </div>
+        </div>
+        <div class="tl-step">
+          <div class="num">2</div>
+          <div class="tl-card">
+            <h3>Exploration and workshop</h3>
+            <span class="when">Block day (Wed 10/21 or Thurs 10/22)</span>
+            <p>Meet in your Health Academy classroom (room 105) for workshop time</p>
+          </div>
+        </div>
+        <div class="tl-step">
+          <div class="num">3</div>
+          <div class="tl-card">
+            <h3>Presentation</h3>
+            <span class="when">Block day (Wed 10/28 or Thurs 10/29)</span>
+            <p>Meet in the Library (room 356) as each group will present their careers to the rest of the class</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div id="view-indicators" hidden>
   <div class="top-grid">
     <div class="hero-box">
       <h2>Health Careers Compendium</h2>
@@ -456,15 +608,15 @@
       name: "Job Outlook & Growth",
       what: "How much employment in this career is projected to grow or shrink over the next ten years, and whether that is faster, slower, or about as fast as average.",
       sources: [
-        {name:"BLS Occupational Outlook Handbook", use:"The Job Outlook section states a percent change and a ten year window, for example 6% from 2024 to 2034, faster than average."},
+        {name:"BLS Occupational Outlook Handbook", use:"The Job Outlook section states a percent change and a ten year window, for example 6% from 2025 to 2035, faster than average."},
         {name:"CA EDD LMI, Occupational Projections", use:"California specific ten year projections, often broken out by region including the Bay Area."}
       ],
       howFind: "On the same BLS OOH page, open the Job Outlook section.",
-      howReport: "Write the percent change, the years it covers, and whether that is faster, slower, or about average. About 4% is roughly the all-occupation average right now.",
+      howReport: "Write the percent change, the years it covers, and whether that is faster, slower, or about average. For 2025 to 2035, BLS lists about 3% as the average for all occupations. Then add one sentence about a change in society that could raise or lower demand for this career, such as an aging population, new technology, or changes in health policy. The Job Outlook section often explains why BLS expects growth or decline, so start there.",
       examples: [
         {
           label: "Dentist",
-          finding: "The Bureau of Labor Statistics (BLS) projects employment for dentists to grow faster than the average for all occupations over the current ten year window.",
+          finding: "The Bureau of Labor Statistics (BLS) projects employment for dentists to grow faster than the average for all occupations over the current ten year window. BLS says older people will need more dental services, and each generation is keeping more of its teeth, so more dental care will be needed over time.",
           cite: "BLS OOH, bls.gov/ooh/healthcare/dentists.htm, Job Outlook section."
         },
         {
@@ -684,21 +836,24 @@
   });
 
   /* tabs */
-  var tabIndicators = document.getElementById('tab-btn-indicators');
-  var tabCareers = document.getElementById('tab-btn-careers');
-  var viewIndicators = document.getElementById('view-indicators');
-  var viewCareers = document.getElementById('view-careers');
-  tabIndicators.addEventListener('click', function(){
-    tabIndicators.classList.add('active');
-    tabCareers.classList.remove('active');
-    viewIndicators.hidden = false;
-    viewCareers.hidden = true;
+  var TABS = {
+    home: { btn: document.getElementById('tab-btn-home'), view: document.getElementById('view-home') },
+    indicators: { btn: document.getElementById('tab-btn-indicators'), view: document.getElementById('view-indicators') },
+    careers: { btn: document.getElementById('tab-btn-careers'), view: document.getElementById('view-careers') }
+  };
+  function showTab(key){
+    Object.keys(TABS).forEach(function(k){
+      var on = (k === key);
+      TABS[k].btn.classList.toggle('active', on);
+      TABS[k].view.hidden = !on;
+    });
+    window.scrollTo(0, 0);
+  }
+  Object.keys(TABS).forEach(function(k){
+    TABS[k].btn.addEventListener('click', function(){ showTab(k); });
   });
-  tabCareers.addEventListener('click', function(){
-    tabCareers.classList.add('active');
-    tabIndicators.classList.remove('active');
-    viewCareers.hidden = false;
-    viewIndicators.hidden = true;
+  document.querySelectorAll('[data-goto]').forEach(function(b){
+    b.addEventListener('click', function(e){ e.preventDefault(); showTab(b.getAttribute('data-goto')); });
   });
 })();
 </script>
