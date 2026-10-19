@@ -373,6 +373,11 @@
 
   /* ---------- tab bar: five tabs, wrap on narrow screens ---------- */
   .tabbar-inner{ flex-wrap:wrap; justify-content:center; border-radius:26px; }
+  .tabbar-details{ margin-top:10px; align-items:center; gap:12px; flex-wrap:wrap; }
+  .tabbar-label{ font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase; font-weight:700; color:var(--muted); }
+  .tabbar-details .tabbar-inner{ background:transparent; padding:3px; }
+  .tabbar-details button{ font-size:0.8rem; padding:6px 15px; border:1px solid var(--line-soft); }
+  .tabbar-details button.active{ border-color:var(--teal-600); }
 
   /* ---------- randomizer + assignments ---------- */
   .rz{ max-width:1320px; margin:28px auto 0; display:flex; flex-direction:column; gap:28px; }
@@ -598,17 +603,22 @@
       <p>Companion Hub for Galileo Health Academy Career Exploration</p>
     </div>
   </div>
-  <div class="legend">Click any information area to see what it means, where to find real data for it, and an example already filled in.</div>
+  <div class="legend">Click any career characteristic to see what it means, where to find real data for it, and an example already filled in.</div>
 </header>
 
 <div class="tabbar">
   <div class="tabbar-inner">
-    <button id="tab-btn-home" class="active">Project Home</button>
-    <button id="tab-btn-indicators">Information Areas</button>
+    <button id="tab-btn-home" class="active">Project Home &amp; Description</button>
+    <button id="tab-btn-indicators">Research Hub - Career Characteristics</button>
+    <button id="tab-btn-sources">Where Data Comes From</button>
+  </div>
+</div>
+<div class="tabbar tabbar-details">
+  <span class="tabbar-label">Project Details</span>
+  <div class="tabbar-inner">
     <button id="tab-btn-careers">Careers &amp; Clusters</button>
     <button id="tab-btn-randomizer">Group Randomizer</button>
     <button id="tab-btn-assignments">Group Assignments</button>
-    <button id="tab-btn-sources">Where Data Comes From</button>
   </div>
 </div>
 
@@ -642,7 +652,7 @@
       </div>
       <div class="qcard">
         <h3>HOW</h3>
-        <p>Use the <a href="#" data-goto="indicators">Research Hub</a> to explore the seven information areas so that you can make standardized comparisons between health careers</p>
+        <p>Use the <a href="#" data-goto="indicators">Research Hub</a> to explore the six career characteristics so that you can make standardized comparisons between health careers</p>
       </div>
     </section>
 
@@ -682,7 +692,7 @@
   <div class="top-grid">
     <div class="hero-box">
       <h2>Health Careers Compendium</h2>
-      <p>There are seven areas of information every report needs &ndash; use this webtool to find information you can trust.</p>
+      <p>There are six characteristics every career report needs &ndash; use this webtool to find information you can trust.</p>
     </div>
     <div class="hero-side">
       <div class="demo" role="group" aria-label="Example answer">
@@ -699,7 +709,7 @@
     </div>
   </div>
 
-  <div class="tiles-caption" style="margin-top:46px;"><span class="num" id="tiles-count"></span><span class="lbl">Comparison Areas</span></div>
+  <div class="tiles-caption" style="margin-top:46px;"><span class="num" id="tiles-count"></span><span class="lbl">Career Characteristics</span></div>
   <div class="tiles-row" id="tiles-row"></div>
 
   <div class="card-row">
@@ -709,9 +719,7 @@
         <li><b><a href="https://www.onetonline.org/" target="_blank" rel="noopener">O*NET OnLine</a></b> (onetonline.org). A federally funded database of detailed occupation information: tasks, related jobs, wages, and work context.</li>
         <li><b><a href="https://www.bls.gov/ooh/" target="_blank" rel="noopener">BLS Occupational Outlook Handbook</a></b> (bls.gov/ooh). The federal government's occupational reference for pay, job outlook, and work environment. Updated on a regular schedule.</li>
         <li><b><a href="https://labormarketinfo.edd.ca.gov/" target="_blank" rel="noopener">CA EDD Labor Market Information</a></b> (labormarketinfo.edd.ca.gov). California specific wage and employment projections, including regional Bay Area data.</li>
-        <li><b><a href="https://search.dca.ca.gov/" target="_blank" rel="noopener">State licensing boards</a></b> (for example the Dental Board of California, or the California Department of Public Health). The official agencies that set and publish licensing and certification requirements, used for the How to Become One area.</li>
-        <li><b><a href="https://collegescorecard.ed.gov/" target="_blank" rel="noopener">College Scorecard</a></b> (collegescorecard.ed.gov). A U.S. Department of Education tool with school and program costs, graduate debt, and earnings.</li>
-        <li><b><a href="https://nces.ed.gov/collegenavigator/" target="_blank" rel="noopener">College Navigator</a></b> (nces.ed.gov/collegenavigator). Federal data on tuition, fees, and net price for each school.</li>
+        <li><b><a href="https://search.dca.ca.gov/" target="_blank" rel="noopener">State licensing boards</a></b> (for example the Dental Board of California, or the California Department of Public Health). The official agencies that set and publish licensing and certification requirements, used for the first career characteristic.</li>
       </ul>
     </div>
     <div class="info-card plain">
@@ -727,7 +735,7 @@
 <div id="view-careers" hidden>
   <section class="hero">
     <h2>Career Clusters</h2>
-    <p class="careers-legend">Every career your group could choose, grouped by cluster. Dentist and Certified Nursing Assistant are marked because they're the two examples used throughout the Information Areas tab.</p>
+    <p class="careers-legend">Every career your group could choose, grouped by cluster. Dentist and Certified Nursing Assistant are marked because they're the two examples used throughout the Career Characteristics tab.</p>
   </section>
   <div class="cluster-grid" id="cluster-grid"></div>
 </div>
@@ -851,61 +859,39 @@
   var INDICATORS = [
     {
       tag: "1",
-      name: "How to Become One",
-      what: "The route into this career: how much school or training it takes and what kind (a certificate, an associate degree, a bachelor's degree, or a graduate or professional degree), and roughly how many years. Also answer this: does the career have licensing requirements, and if so, what are they?",
+      name: "What Does It Take to Become One?",
+      what: "What it takes to enter this career: the education or training (a certificate, an associate degree, a bachelor's degree, or a graduate or professional degree), how many years it takes, whether a license or certification is required, and what it costs, including typical student debt.",
       sources: [
         {name:"O*NET OnLine, Job Zone section", use:"Search the career title at onetonline.org and open its profile. The Job Zone section describes how much preparation the career needs."},
         {name:"O*NET OnLine, Education section", use:"Shows the percentage of people currently in this job at each education level. This is a real survey, not a guess."},
-        {name:"State licensing board site", use:"Every regulated health career has one, for example the Dental Board of California or the California Department of Public Health. Search for the career name plus California board."}
+        {name:"State licensing board site", use:"Every regulated health career has one, for example the Dental Board of California or the California Department of Public Health. Search for the career name plus California board."},
+        {name:"Google, for cost and debt", use:"There is no single official place for cost, so a Google search is allowed here if you cite the source behind the result. Try: \"how much does it cost to become a [career] in California\" and \"[career] average student debt\". Prefer school, program, professional association, or .gov pages, then cite the page and the year."}
       ],
-      howFind: "Search the career title at onetonline.org. Open its profile. Click the Job Zone section. Then search the career name plus California board to find out whether a license or certification is required.",
-      howReport: "State the type of degree or training program required and about how much time it takes. Then answer the licensing question: if yes, name the exam or exams and how often the license must be renewed.",
+      howFind: "Search the career title at onetonline.org, open its profile, and click Job Zone. Then search the career name plus California board to see whether a license or certification is required. For cost and debt, try the two Google searches above and open the source behind the result.",
+      howReport: "State the degree or training required and about how long it takes. Say whether a license or certification is required and what it involves. Give a cost or a range and say what it includes (tuition only, or tuition plus extras), with the source and the year. On the slides this is split into two cards: 1A Time & Education and 1B Cost & Debt.",
       examples: [
         {
           label: "Dentist",
           finding: [
             "Requires a Doctor of Dental Surgery or Doctor of Dental Medicine degree, which follows a bachelor's degree. About 8 years of school after high school in total.",
-            "Licensing: yes. Pass the INBDE national exam, a clinical licensing exam (or complete an accredited residency instead), and California's Law and Ethics Exam."
+            "Licensing: yes. Pass the INBDE national exam, a clinical licensing exam (or complete an accredited residency instead), and California's Law and Ethics Exam.",
+            "Cost: ADEA reports that 2025 dental school graduates who borrowed owed an average of about $297,800 in education debt, and 94% of that came from dental school loans. That is debt, not the full price, and it only counts graduates who took out loans."
           ],
-          cite: "O*NET OnLine, SOC 29-1021.00, Dentists General profile; Dental Board of California, dbc.ca.gov, Applicants and Licensing pages."
+          cite: "O*NET OnLine, SOC 29-1021.00; Dental Board of California, dbc.ca.gov; ADEA, Dentists of Tomorrow 2025, adea.org."
         },
         {
           label: "CNA",
           finding: [
             "Requires completing a state-approved training program, typically 75 to 150 hours. This is a short-term certificate, not a college degree.",
-            "Licensing: yes, a certification. Pass the CNA competency exam, apply through the California Department of Public Health, and renew every two years."
+            "Licensing: yes, a certification. Pass the CNA competency exam, apply through the California Department of Public Health, and renew every two years.",
+            "Cost: Community college CNA programs are low cost. Ventura College lists about $884 in total, including tuition, books, uniform, and the state exam. Cuesta College estimates $655 to $1,025. The state exam fee alone is about $120."
           ],
-          cite: "O*NET OnLine, SOC 31-1131.00, Nursing Assistants profile; California Department of Public Health, Aide and Technician Certification Section."
+          cite: "O*NET OnLine, SOC 31-1131.00; California Department of Public Health; Ventura College and Cuesta College CNA program cost pages (Cuesta estimate revised July 2023)."
         }
       ]
     },
     {
       tag: "2",
-      name: "Cost to Become One",
-      what: "What it costs to get the education or training this career needs: tuition and fees, plus books, supplies, and exam fees. For long programs, also how much debt graduates typically carry.",
-      sources: [
-        {name:"College Scorecard", use:"collegescorecard.ed.gov. Search the program (field of study) and the degree level. For many programs it shows the typical federal loan debt of graduates and their earnings."},
-        {name:"College Navigator (NCES)", use:"nces.ed.gov/collegenavigator. Find schools that offer the program and compare tuition, fees, and the average net price after aid."},
-        {name:"The program's own cost page", use:"For short training programs, such as a CNA course at a community college or adult school, the school lists tuition, books, uniform, and exam fees. Search the school name plus the program name plus cost."},
-        {name:"Professional school reports", use:"For graduate degrees, groups like ADEA (dental schools) and AAMC (medical schools) publish average tuition and the debt graduates carry. Search the career's school association plus tuition or debt."}
-      ],
-      howFind: "Search the program at collegescorecard.ed.gov and note the cost and typical debt for the right degree level. For a short training program, open the school's own program cost page. Write down tuition and fees AND the extras, like books, uniforms, and exam fees.",
-      howReport: "Give a total cost or a range and say what it includes (tuition only, or tuition plus extras). Name the type of school and the year of the figure. For degrees that take years, include typical debt if you find it.",
-      examples: [
-        {
-          label: "Dentist",
-          finding: "Dental school is the big cost. ADEA reports that 2025 dental school graduates who borrowed owed an average of about $297,800 in education debt, and 94% of that came from dental school loans. That is debt, not the full price, and it only counts graduates who took out loans.",
-          cite: "ADEA, Dentists of Tomorrow 2025, adea.org."
-        },
-        {
-          label: "CNA",
-          finding: "Community college CNA programs cost far less. Ventura College lists about $884 in total, including tuition, books, uniform, and the state exam. Cuesta College estimates $655 to $1,025. The state exam fee alone is about $120.",
-          cite: "Ventura College and Cuesta College, CNA program cost pages (Cuesta estimate revised July 2023)."
-        }
-      ]
-    },
-    {
-      tag: "3",
       name: "Wage & Salary Data",
       what: "What this career typically pays, both nationally and in California specifically. Pay and cost of living vary a lot by state and region.",
       sources: [
@@ -928,7 +914,7 @@
       ]
     },
     {
-      tag: "4",
+      tag: "3",
       name: "Job Outlook & Growth",
       what: "How much employment in this career is projected to grow or shrink over the next ten years, and whether that is faster, slower, or about as fast as average.",
       sources: [
@@ -951,7 +937,7 @@
       ]
     },
     {
-      tag: "5",
+      tag: "4",
       name: "Day-to-Day Duties",
       what: "What someone in this career actually does during a typical day or week. Real tasks, not a vague job title description.",
       sources: [
@@ -974,7 +960,7 @@
       ]
     },
     {
-      tag: "6",
+      tag: "5",
       name: "Career Advancement",
       what: "How someone grows in this career over time: promotions, specializations, or related careers reachable with more training.",
       sources: [
@@ -996,7 +982,7 @@
       ]
     },
     {
-      tag: "7",
+      tag: "6",
       name: "Work Schedule & Flexibility",
       what: "Typical weekly hours, shift patterns, and how much control a person in this career usually has over their own schedule.",
       sources: [
@@ -1046,7 +1032,7 @@
     tilesRow.appendChild(tile);
   });
 
-  document.getElementById('tiles-count').textContent = n;
+  document.getElementById('tiles-count').textContent = 6;
 
   var clusterGrid = document.getElementById('cluster-grid');
   CLUSTERS.forEach(function(cluster){
@@ -1076,8 +1062,6 @@
 
   function sourceUrl(name){
     if (name.indexOf('O*NET') !== -1) return 'https://www.onetonline.org/';
-    if (name.indexOf('College Scorecard') !== -1) return 'https://collegescorecard.ed.gov/';
-    if (name.indexOf('College Navigator') !== -1) return 'https://nces.ed.gov/collegenavigator/';
     if (name.indexOf('EDD') !== -1) return 'https://labormarketinfo.edd.ca.gov/';
     if (name.indexOf('BLS') !== -1 || name.indexOf('Bureau of Labor') !== -1 || name.indexOf('Occupational Outlook') !== -1) return 'https://www.bls.gov/ooh/';
     if (name.indexOf('licensing board') !== -1) return 'https://search.dca.ca.gov/';
@@ -1088,7 +1072,7 @@
     var ind = INDICATORS[i];
     var activeEx = 0;
 
-    drawerTag.textContent = 'Information Area ' + ind.tag;
+    drawerTag.textContent = 'Career Characteristic ' + ind.tag;
     drawerTitle.textContent = ind.name;
 
     var srcHtml = ind.sources.map(function(s){
@@ -1605,7 +1589,7 @@
 
 <script>
 (function(){
-  var AREAS = {1:'How to Become One', 2:'Cost to Become One', 3:'Wage & Salary Data', 4:'Job Outlook & Growth', 5:'Day-to-Day Duties', 6:'Career Advancement', 7:'Work Schedule & Flexibility'};
+  var AREAS = {1:'1. What Does It Take to Become One?', 2:'2. Wage & Salary Data', 3:'3. Job Outlook & Growth', 4:'4. Day-to-Day Duties', 5:'5. Career Advancement', 6:'6. Work Schedule & Flexibility'};
   var T = {};
   function add(id, parent, name, kind, blurb, o){
     o = o || {};
@@ -1615,31 +1599,20 @@
   /* federal */
   add('fed', null, 'Federal Government', 'Government', 'The national government of the United States, divided into three branches.');
   add('exec','fed','Executive Branch','Branch','Carries out the laws. Led by the President, and includes the cabinet departments, each run by a Secretary.');
-  add('leg','fed','Legislative Branch (Congress)','Branch','Makes the laws and approves the money that agencies get. Not a source in this hub.',{muted:true});
-  add('jud','fed','Judicial Branch (Courts)','Branch','Interprets the laws. Not a source in this hub.',{muted:true});
   add('dol','exec','Department of Labor','Department','A cabinet department focused on jobs, wages, workplace safety, and workers’ rights. Led by the Secretary of Labor.');
   add('bls','dol','Bureau of Labor Statistics (BLS)','Agency','The Department of Labor’s statistics agency. It measures employment, pay, prices, and working conditions, and publishes the results for anyone to use.');
-  add('ooh','bls','Occupational Outlook Handbook','Hub source','BLS’s career guide. For hundreds of occupations it gives pay, job outlook, what workers do, and the work environment.',{hub:[3,4,5,7], url:'https://www.bls.gov/ooh/'});
+  add('ooh','bls','Occupational Outlook Handbook','Hub source','BLS’s career guide. For hundreds of occupations it gives pay, job outlook, what workers do, and the work environment.',{hub:[2,3,4,6], url:'https://www.bls.gov/ooh/'});
   add('eta','dol','Employment and Training Administration (ETA)','Agency','Runs federal job training and workforce programs. It also sponsors O*NET.');
-  add('onet','eta','O*NET OnLine','Hub source','A detailed occupation database: tasks, education, related jobs, and work context. ETA sponsors it by funding a grant to the North Carolina Department of Commerce, and the National Center for O*NET Development runs it.',{hub:[1,5,6,7], url:'https://www.onetonline.org/'});
-  add('dolother','dol','Other Labor agencies','Agencies','Includes OSHA (workplace safety), the Wage and Hour Division, and more. They are not sources in this hub.',{muted:true});
-  add('edu','exec','Department of Education','Department','A cabinet department for federal education policy and student aid. It is being reorganized and some programs have moved to other agencies, but the tools used in this hub are still published under the Department.');
-  add('ies','edu','Institute of Education Sciences (IES)','Agency','The Department’s research and statistics arm.');
-  add('nces','ies','National Center for Education Statistics (NCES)','Agency','The primary statistical agency of the Department of Education. It gathers and publishes statistics on U.S. education.');
-  add('navigator','nces','College Navigator','Hub source','An NCES tool for comparing schools: programs offered, tuition, fees, and net price after aid.',{hub:[2], url:'https://nces.ed.gov/collegenavigator/'});
-  add('scorecard','edu','College Scorecard','Hub source','A Department of Education tool with school and program costs, graduate debt, and earnings.',{hub:[2], url:'https://collegescorecard.ed.gov/'});
-  add('otherdept','exec','Other cabinet departments','Departments','Health and Human Services, Treasury, Justice, and others. They are not sources in this hub.',{muted:true});
+  add('onet','eta','O*NET OnLine','Hub source','A detailed occupation database: tasks, education, related jobs, and work context. ETA sponsors it by funding a grant to the North Carolina Department of Commerce, and the National Center for O*NET Development runs it.',{hub:[1,4,5,6], url:'https://www.onetonline.org/'});
   /* state */
   add('ca', null, 'State of California', 'Government', 'State agencies publish their own data. It can differ from federal data, such as California wages compared with national wages.');
   add('lwda','ca','Labor & Workforce Development Agency','State agency','Oversees seven departments, boards, and panels that serve California workers and employers.');
   add('edd','lwda','Employment Development Department (EDD)','State department','Runs unemployment insurance, disability insurance, payroll tax, and job training and workforce services.');
-  add('lmi','edd','CA EDD Labor Market Information','Hub source','California wage and employment data and ten-year projections, including regional numbers. Use it next to BLS to compare California with the nation.',{hub:[3,4], url:'https://labormarketinfo.edd.ca.gov/'});
-  add('dir','lwda','Department of Industrial Relations (DIR)','State department','Protects worker health, safety, and well-being. Not a source in this hub.',{muted:true});
+  add('lmi','edd','CA EDD Labor Market Information','Hub source','California wage and employment data and ten-year projections, including regional numbers. Use it next to BLS to compare California with the nation.',{hub:[2,3], url:'https://labormarketinfo.edd.ca.gov/'});
   add('boards','ca','State licensing boards','Hub source','Each regulated career has a California board or department, such as the Dental Board of California or the California Department of Public Health. They sit under several different state agencies and set the licensing and certification rules.',{hub:[1], url:'https://search.dca.ca.gov/'});
-  add('caother','ca','Other state agencies','State agencies','Not sources in this hub.',{muted:true});
 
   var ROOTS = ['fed','ca'];
-  var JUMP = ['ooh','onet','lmi','scorecard','navigator','boards'];
+  var JUMP = ['ooh','onet','lmi','boards'];
   var path = ['fed','exec','dol','bls','ooh'];
 
   function pathTo(id){ var p = []; while (id){ p.unshift(id); id = T[id].parent; } return p; }
@@ -1700,7 +1673,7 @@
     var h = '<div><span class="sm-kind">' + esc(n.kind) + '</span></div><h3>' + esc(n.name) + '</h3><p>' + esc(n.blurb) + '</p>';
     h += '<div><h4>Where it sits</h4><div class="sm-path">' + crumbs + '</div></div>';
     if (n.hub){
-      h += '<div><h4>Used in this hub for</h4><div class="sm-areas">' + n.hub.map(function(a){ return '<span>' + a + '. ' + esc(AREAS[a]) + '</span>'; }).join('') + '</div></div>';
+      h += '<div><h4>Used in this hub for</h4><div class="sm-areas">' + n.hub.map(function(a){ return '<span>' + esc(AREAS[a]) + '</span>'; }).join('') + '</div></div>';
     }
     if (n.url){
       h += '<div><a href="' + n.url + '" target="_blank" rel="noopener">Open ' + esc(n.name) + '</a></div>';
