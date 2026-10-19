@@ -379,6 +379,46 @@
   .tabbar-details button{ font-size:0.8rem; padding:6px 15px; border:1px solid var(--line-soft); }
   .tabbar-details button.active{ border-color:var(--teal-600); }
 
+
+  /* ---------- wage vs. cost calculator ---------- */
+  .wc{ max-width:1320px; margin:28px auto 0; display:flex; flex-direction:column; gap:22px; }
+  .wc-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+  @media (max-width: 920px){ .wc-grid{ grid-template-columns:1fr; } }
+  .wc-card{ border:1px solid var(--line); border-top:4px solid var(--c, var(--teal-400)); border-radius:14px; padding:16px 18px; background:var(--ink-850); display:flex; flex-direction:column; gap:12px; }
+  .wc-card.off{ opacity:0.55; }
+  .wc-top{ display:flex; align-items:center; gap:10px; }
+  .wc-swatch{ width:14px; height:14px; border-radius:50%; background:var(--c, var(--teal-400)); flex:none; }
+  .wc-top select{ flex:1; min-width:0; font-family:'Inter',sans-serif; font-size:0.95rem; font-weight:600; background:var(--ink-800); color:var(--paper); border:1px solid var(--line); border-radius:10px; padding:9px 10px; }
+  .wc-top select:focus, .wc-card input:focus{ outline:2px solid var(--teal-400); outline-offset:1px; }
+  .wc-sum{ margin:0; font-size:0.85rem; color:var(--paper-dim); max-width:none; }
+  .wc-card details{ border-top:1px solid var(--line-soft); padding-top:10px; }
+  .wc-card summary{ cursor:pointer; font-size:0.78rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--teal-300); font-weight:700; }
+  .wc-fields{ display:grid; grid-template-columns:1fr 1fr; gap:10px 12px; margin-top:12px; }
+  .wc-fields label{ display:flex; flex-direction:column; gap:4px; font-size:0.68rem; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted); font-weight:600; }
+  .wc-fields label.wide{ grid-column:1 / -1; }
+  .wc-fields input{ font-family:'Inter',sans-serif; font-size:0.9rem; letter-spacing:0; text-transform:none; font-weight:500; background:var(--ink-800); color:var(--paper); border:1px solid var(--line); border-radius:8px; padding:7px 9px; width:100%; min-width:0; }
+  .wc-src{ margin:0; font-size:0.74rem; color:var(--muted); max-width:none; line-height:1.45; }
+  .wc-chart-card{ border:1px solid var(--line); border-radius:16px; padding:20px 22px; background:var(--ink-850); display:flex; flex-direction:column; gap:12px; }
+  .wc-chart-head{ display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; }
+  .wc-chart-head h3{ font-size:1.15rem; color:var(--paper); }
+  .wc-slide{ display:flex; align-items:center; gap:12px; font-size:0.85rem; color:var(--paper-dim); }
+  .wc-slide b{ color:var(--teal-300); font-variant-numeric:tabular-nums; min-width:1.6em; display:inline-block; text-align:right; }
+  .wc-slide input[type=range]{ width:200px; max-width:50vw; accent-color:var(--teal-400); }
+  #wc-svg{ width:100%; height:auto; display:block; }
+  .wc-read{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+  @media (max-width: 920px){ .wc-read{ grid-template-columns:1fr; } }
+  .wc-r{ border:1px solid var(--line); border-radius:14px; padding:16px 18px; background:var(--ink-850); border-left:4px solid var(--c, var(--teal-400)); }
+  .wc-r h4{ margin:0 0 8px; font-size:0.95rem; color:var(--paper); }
+  .wc-r dl{ margin:0; display:grid; grid-template-columns:1fr auto; gap:6px 12px; font-size:0.85rem; }
+  .wc-r dt{ color:var(--muted); }
+  .wc-r dd{ margin:0; color:var(--paper); font-weight:600; font-variant-numeric:tabular-nums; text-align:right; }
+  .wc-r dd.neg{ color:#ff9b8a; }
+  .wc-cross{ border:1px dashed var(--teal-700); border-radius:12px; padding:12px 16px; background:rgba(94,234,212,0.06); color:var(--paper); font-size:0.92rem; }
+  .wc-cross p{ margin:0 0 4px; max-width:none; }
+  .wc-cross p:last-child{ margin:0; }
+  .wc-notes{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  @media (max-width: 920px){ .wc-notes{ grid-template-columns:1fr; } }
+
   /* ---------- randomizer + assignments ---------- */
   .rz{ max-width:1320px; margin:28px auto 0; display:flex; flex-direction:column; gap:28px; }
   .rz-sec{
@@ -619,6 +659,7 @@
     <button id="tab-btn-careers">Careers &amp; Clusters</button>
     <button id="tab-btn-randomizer">Group Randomizer</button>
     <button id="tab-btn-assignments">Group Assignments</button>
+    <button id="tab-btn-calculator">Wage vs. Cost Calculator</button>
   </div>
 </div>
 
@@ -852,6 +893,47 @@
     <button class="drawer-close" id="drawer-close" aria-label="Close">&times;</button>
   </div>
   <div class="drawer-body" id="drawer-body"></div>
+</div>
+
+<div id="view-calculator" hidden>
+  <section class="hero">
+    <h2>Wage vs. Cost Calculator</h2>
+    <p class="careers-legend">Pick up to three careers and see the money story over time. It counts the years you spend in school and training with little or no pay, the debt you take on, and what you earn after. Slide the year to see where each career stands.</p>
+  </section>
+  <div class="wc">
+    <div class="wc-grid" id="wc-cards"></div>
+    <section class="wc-chart-card">
+      <div class="wc-chart-head">
+        <h3>Net money over time</h3>
+        <label class="wc-slide" for="wc-year">Look at year <b id="wc-year-out">20</b> <input type="range" id="wc-year" min="5" max="40" value="20"></label>
+      </div>
+      <svg id="wc-svg" viewBox="0 0 760 380" role="img" aria-label="Line chart of net money over time for the selected careers"></svg>
+    </section>
+    <div class="wc-read" id="wc-read"></div>
+    <div class="wc-cross" id="wc-cross"></div>
+    <div class="wc-notes">
+      <div class="info-card">
+        <h3>How to read this</h3>
+        <ul>
+          <li><b>Year 0</b> is high school graduation, about age 18. Year 20 is about age 38.</li>
+          <li><b>Net money</b> is everything you have earned so far, minus every loan payment, minus the debt you still owe. Zero means you are right where you started.</li>
+          <li><b>Below zero</b> means debt is bigger than what you have earned. <b>Out of the red</b> is the first year the line comes back to zero.</li>
+          <li>Open <b>Adjust numbers</b> on a card to type in your own researched values. Any edit switches that card to Custom.</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>What this leaves out</h3>
+        <ul>
+          <li>It is a model for comparing careers, not a prediction. Real careers have raises, bonuses, and bad years.</li>
+          <li>Pay is before taxes, and living costs, savings, and loan forgiveness are not counted.</li>
+          <li>Median pay averages everyone in the career, new and experienced, so early years in real life are lower and later years higher.</li>
+          <li>Debt is the average for people who borrowed, not everyone. Many students pay less with scholarships or family help.</li>
+          <li>Money is only one half of the picture. Your group still has to judge the day-to-day life.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <footer>Built for the Galileo Health Academy 2026&ndash;2027</footer>
 </div>
 
 <script>
@@ -1208,7 +1290,8 @@
     careers: { btn: document.getElementById('tab-btn-careers'), view: document.getElementById('view-careers') },
     randomizer: { btn: document.getElementById('tab-btn-randomizer'), view: document.getElementById('view-randomizer') },
     assignments: { btn: document.getElementById('tab-btn-assignments'), view: document.getElementById('view-assignments') },
-    sources: { btn: document.getElementById('tab-btn-sources'), view: document.getElementById('view-sources') }
+    sources: { btn: document.getElementById('tab-btn-sources'), view: document.getElementById('view-sources') },
+    calculator: { btn: document.getElementById('tab-btn-calculator'), view: document.getElementById('view-calculator') }
   };
   function showTab(key){
     Object.keys(TABS).forEach(function(k){
@@ -1718,4 +1801,192 @@
 })();
 </script>
 
+<script>
+(function(){
+  var COLORS = ['#8fe9d9', '#f0b25e', '#b9a7f5'];
+  var PRESETS = {
+    cna: { label:'Certified Nursing Assistant', short:'CNA', school:0.25, train:0, trainPay:0, pay:41870, debt:884, rate:0, repay:1, raise:0,
+      src:'Pay: BLS Occupational Outlook Handbook, nursing assistants and orderlies, median, May 2025. Cost: Ventura College CNA program, about $884 total including the state exam. Training is a short certificate program.' },
+    dentist: { label:'Dentist', short:'Dentist', school:8, train:0, trainPay:0, pay:176110, debt:297800, rate:7, repay:10, raise:0,
+      src:'Pay: BLS Occupational Outlook Handbook, dentists, median, May 2025. Debt: ADEA, 2025 dental graduates who borrowed, average $297,800. School is 4 years of college plus 4 years of dental school. Interest rate is an assumption.' },
+    physician: { label:'Physician', short:'Physician', school:8, train:4, trainPay:68166, pay:275930, debt:205000, rate:7, repay:10, raise:0,
+      src:'Pay: BLS Occupational Outlook Handbook, physicians and surgeons, median, May 2025. Training: 4 years of medical school after college, then residency of 3 to 9 years depending on specialty; 4 is used here. Resident pay: AAMC 2025 survey, average first-year stipend $68,166. Debt: AAMC, class of 2024, median among graduates with debt $205,000. Interest rate is an assumption.' }
+  };
+  var FIELDS = [
+    ['name','Career name','text','wide'],
+    ['school','Years of school (no pay)','number'],
+    ['train','Years of paid training','number'],
+    ['trainPay','Pay during training ($/yr)','number'],
+    ['pay','Full pay ($/yr)','number'],
+    ['debt','Total debt ($)','number'],
+    ['rate','Loan interest (%/yr)','number'],
+    ['repay','Years to repay','number'],
+    ['raise','Yearly raise (%)','number']
+  ];
+  var MAXY = 40;
+  var slots = [ clone(PRESETS.cna,'cna'), clone(PRESETS.dentist,'dentist'), clone(PRESETS.physician,'physician') ];
+  function clone(p, key){ var o = {key:key, name:p.label, short:p.short}; ['school','train','trainPay','pay','debt','rate','repay','raise','src'].forEach(function(k){ o[k]=p[k]; }); return o; }
+  function num(v){ v = parseFloat(v); return isFinite(v) ? v : 0; }
 
+  /* month-by-month model. net = cash earned minus payments, minus balance owed */
+  function simulate(c){
+    var schoolM = Math.round(Math.max(0, c.school) * 12), trainM = Math.round(Math.max(0, c.train) * 12);
+    var repayM = Math.max(1, Math.round(Math.max(0.25, c.repay) * 12));
+    var mr = Math.max(0, c.rate) / 100 / 12, debt = Math.max(0, c.debt);
+    var pmt = debt <= 0 ? 0 : (mr === 0 ? debt / repayM : debt * mr / (1 - Math.pow(1 + mr, -repayM)));
+    var bal = 0, cash = 0, paid = 0, interest = 0, net = [0], out = null, fullStart = (schoolM + trainM) / 12;
+    var N = MAXY * 12;
+    for (var i = 1; i <= N; i++){
+      var m = i - 1; // month being lived
+      if (m < schoolM){ bal += debt / Math.max(1, schoolM); }
+      else {
+        var it = bal * mr; bal += it; interest += it;
+        var earn = (m < schoolM + trainM) ? c.trainPay / 12 : (c.pay / 12) * Math.pow(1 + c.raise / 100, Math.floor((m - schoolM - trainM) / 12));
+        cash += earn;
+        if (m < schoolM + repayM && bal > 0){ var p = Math.min(pmt, bal); bal -= p; cash -= p; paid += p; }
+      }
+      var v = cash - bal; net.push(v);
+      if (out === null && i > schoolM && v >= 0 && (schoolM > 0 || debt > 0 || true) && i > 1) out = i / 12;
+    }
+    return {net:net, out:out, interest:interest, fullStart:fullStart, schoolM:schoolM};
+  }
+  function money(v, plain){
+    var a = Math.abs(v), sgn = v < 0 ? '-' : '', t;
+    if (a >= 1e6) t = '$' + (a/1e6).toFixed(a >= 1e7 ? 1 : 2) + 'M';
+    else if (plain || a < 1000) t = '$' + Math.round(a).toLocaleString('en-US');
+    else t = '$' + Math.round(a/1000).toLocaleString('en-US') + 'K';
+    return sgn + t;
+  }
+  function yrs(v){ return (Math.round(v*10)/10).toString(); }
+  function esc(t){ return String(t).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+
+  var cardsEl = document.getElementById('wc-cards'), svg = document.getElementById('wc-svg');
+  var readEl = document.getElementById('wc-read'), crossEl = document.getElementById('wc-cross');
+  var yearEl = document.getElementById('wc-year'), yearOut = document.getElementById('wc-year-out');
+
+  function buildCards(){
+    cardsEl.innerHTML = '';
+    slots.forEach(function(c, i){
+      var d = document.createElement('div'); d.className = 'wc-card' + (c.key === 'none' ? ' off' : ''); d.style.setProperty('--c', COLORS[i]);
+      var opts = [['cna','Certified Nursing Assistant'],['dentist','Dentist'],['physician','Physician'],['custom','Custom (enter your own)'],['none','None']]
+        .map(function(o){ return '<option value="'+o[0]+'"'+(c.key===o[0]?' selected':'')+'>'+o[1]+'</option>'; }).join('');
+      var f = FIELDS.map(function(F){
+        return '<label class="'+(F[3]||'')+'">'+F[1]+'<input data-k="'+F[0]+'" data-i="'+i+'" type="'+F[2]+'"'+(F[2]==='number'?' step="any" min="0" inputmode="decimal"':'')+' value="'+esc(c[F[0]])+'"></label>';
+      }).join('');
+      d.innerHTML = '<div class="wc-top"><span class="wc-swatch"></span><select data-i="'+i+'" aria-label="Career '+(i+1)+'">'+opts+'</select></div>'
+        + (c.key === 'none' ? '<p class="wc-sum">Not shown on the chart.</p>' :
+          '<p class="wc-sum" id="wc-sum-'+i+'"></p><details'+(c.key==='custom'?' open':'')+'><summary>Adjust numbers</summary><div class="wc-fields">'+f+'</div></details><p class="wc-src" id="wc-src-'+i+'"></p>');
+      cardsEl.appendChild(d);
+    });
+    cardsEl.querySelectorAll('select').forEach(function(sel){
+      sel.addEventListener('change', function(){
+        var i = +sel.dataset.i, v = sel.value;
+        if (v === 'none') slots[i] = {key:'none', name:'None', short:'None'};
+        else if (v === 'custom') { var o = slots[i].key === 'none' ? clone(PRESETS.cna,'custom') : slots[i]; o.key='custom'; o.name = slots[i].key==='none' ? 'My career' : slots[i].name; o.short = o.name; o.src = 'Numbers entered by your group. Cite the source and year for each number.'; slots[i] = o; }
+        else slots[i] = clone(PRESETS[v], v);
+        buildCards(); render();
+      });
+    });
+    cardsEl.querySelectorAll('input').forEach(function(inp){
+      inp.addEventListener('input', function(){
+        var i = +inp.dataset.i, k = inp.dataset.k, c = slots[i];
+        c[k] = (k === 'name') ? inp.value : num(inp.value);
+        if (c.key !== 'custom'){ c.key = 'custom'; c.src = 'Numbers entered by your group. Cite the source and year for each number.';
+          var sel = cardsEl.querySelectorAll('select')[i]; sel.value = 'custom'; }
+        if (k === 'name') c.short = inp.value || 'Custom';
+        render(true);
+      });
+    });
+  }
+
+  function summaryText(c){
+    var parts = [yrs(c.school) + ' yr school'];
+    if (c.train > 0) parts.push(yrs(c.train) + ' yr paid training');
+    parts.push(money(c.pay, true) + '/yr full pay');
+    parts.push(c.debt > 0 ? money(c.debt, true) + ' debt' : 'no debt');
+    return parts.join(' • ');
+  }
+
+  function niceStep(range){
+    var steps = [10e3,25e3,50e3,100e3,250e3,500e3,1e6,2e6,5e6]; for (var i=0;i<steps.length;i++){ if (range / steps[i] <= 8) return steps[i]; } return 5e6;
+  }
+
+  function render(keepCards){
+    var Y = +yearEl.value; yearOut.textContent = Y;
+    var live = [];
+    slots.forEach(function(c, i){ if (c.key !== 'none'){ var r = simulate(c); live.push({i:i, c:c, r:r, col:COLORS[i]}); } });
+    slots.forEach(function(c, i){
+      var sum = document.getElementById('wc-sum-'+i), src = document.getElementById('wc-src-'+i);
+      if (sum) sum.textContent = summaryText(c); if (src) src.textContent = c.src || '';
+    });
+    // scale
+    var lo = 0, hi = 0;
+    live.forEach(function(L){ L.r.net.forEach(function(v){ if (v < lo) lo = v; if (v > hi) hi = v; }); });
+    if (hi === 0 && lo === 0) hi = 100000;
+    var step = niceStep(hi - lo), top = Math.ceil(hi / step) * step, bot = Math.floor(lo / step) * step;
+    var cw = svg.clientWidth || 760, narrow = cw < 560;
+    var W = Math.max(300, Math.round(cw)), H = narrow ? 340 : 440, mL = narrow ? 52 : 64, mR = narrow ? 74 : 118, mT = 16, mB = 46;
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    var pw = W - mL - mR, ph = H - mT - mB;
+    function X(m){ return mL + (m / (MAXY*12)) * pw; }
+    function Yp(v){ return mT + (1 - (v - bot) / (top - bot)) * ph; }
+    var g = '';
+    for (var t = bot; t <= top + 1; t += step){
+      var yy = Yp(t);
+      g += '<line x1="'+mL+'" x2="'+(W-mR)+'" y1="'+yy+'" y2="'+yy+'" stroke="'+(t===0?'#8fa9a6':'#2c4144')+'" stroke-width="'+(t===0?1.6:1)+'"/>';
+      g += '<text x="'+(mL-8)+'" y="'+(yy+4)+'" text-anchor="end" font-size="11" fill="#8fa9a6">'+money(t)+'</text>';
+    }
+    for (var x = 0; x <= MAXY; x += (narrow ? 10 : 5)){
+      g += '<line x1="'+X(x*12)+'" x2="'+X(x*12)+'" y1="'+mT+'" y2="'+(H-mB)+'" stroke="#1f3134"/>';
+      g += '<text x="'+X(x*12)+'" y="'+(H-mB+16)+'" text-anchor="middle" font-size="11" fill="#8fa9a6">'+x+'</text>';
+    }
+    g += '<text x="'+(mL+pw/2)+'" y="'+(H-8)+'" text-anchor="middle" font-size="12" fill="#c7dbd8">Years after high school</text>';
+    // selected year marker
+    g += '<line x1="'+X(Y*12)+'" x2="'+X(Y*12)+'" y1="'+mT+'" y2="'+(H-mB)+'" stroke="#eef7f5" stroke-width="1.5" stroke-dasharray="4 4"/>';
+    // lines
+    var ends = [];
+    live.forEach(function(L){
+      var pts = []; for (var m = 0; m < L.r.net.length; m += 1){ pts.push(X(m).toFixed(1)+','+Yp(L.r.net[m]).toFixed(1)); }
+      g += '<polyline fill="none" stroke="'+L.col+'" stroke-width="2.6" stroke-linejoin="round" points="'+pts.join(' ')+'"/>';
+      g += '<circle cx="'+X(Y*12)+'" cy="'+Yp(L.r.net[Y*12])+'" r="4.5" fill="'+L.col+'" stroke="#0f1719" stroke-width="1.5"/>';
+      ends.push({y:Yp(L.r.net[MAXY*12]), col:L.col, name:L.c.short || L.c.name});
+    });
+    ends.sort(function(a,b){ return a.y - b.y; });
+    for (var e = 1; e < ends.length; e++){ if (ends[e].y - ends[e-1].y < 15) ends[e].y = ends[e-1].y + 15; }
+    ends.forEach(function(E){
+      var lim = narrow ? 9 : 14; var nm = E.name.length > lim ? E.name.slice(0,lim-1) + '…' : E.name;
+      g += '<text x="'+(W-mR+8)+'" y="'+(E.y+4)+'" font-size="12" font-weight="700" fill="'+E.col+'">'+esc(nm)+'</text>';
+    });
+    g += '<text x="'+(W-mR-6)+'" y="'+(Yp(0)+15)+'" text-anchor="end" font-size="10.5" fill="#8fa9a6">$0 = where you started</text>';
+    svg.innerHTML = g;
+    svg.setAttribute('aria-label', 'Net money over ' + MAXY + ' years for ' + live.map(function(L){ return L.c.name + ' ends at ' + money(L.r.net[MAXY*12]); }).join('; '));
+
+    // readout cards
+    readEl.innerHTML = live.map(function(L){
+      var n = L.r.net[Y*12];
+      return '<div class="wc-r" style="--c:'+L.col+'"><h4>'+esc(L.c.name)+'</h4><dl>'
+        + '<dt>Net money at year '+Y+'</dt><dd class="'+(n<0?'neg':'')+'">'+money(n, true)+'</dd>'
+        + '<dt>Full pay starts</dt><dd>year '+yrs(L.r.fullStart)+'</dd>'
+        + '<dt>Out of the red</dt><dd>'+(L.r.out===null?'not within '+MAXY+' yrs':'year '+yrs(L.r.out))+'</dd>'
+        + '<dt>Interest paid</dt><dd>'+money(L.r.interest, true)+'</dd>'
+        + '</dl></div>';
+    }).join('');
+    // who is ahead + crossovers
+    var lines = [];
+    if (live.length) {
+      var best = live.slice().sort(function(a,b){ return b.r.net[Y*12] - a.r.net[Y*12]; })[0];
+      lines.push('<p><b>At year '+Y+':</b> '+esc(best.c.name)+' is ahead with '+money(best.r.net[Y*12], true)+'.</p>');
+    }
+    for (var a = 0; a < live.length; a++) for (var b = a + 1; b < live.length; b++){
+      var A = live[a], B = live[b], prev = 0, cross = null;
+      for (var m = 1; m <= MAXY*12; m++){ var df = A.r.net[m] - B.r.net[m]; var sg = df > 1 ? 1 : (df < -1 ? -1 : 0); if (sg !== 0){ if (prev !== 0 && sg !== prev){ cross = {m:m, over: sg > 0 ? A : B, under: sg > 0 ? B : A}; break; } prev = sg; } }
+      if (cross) lines.push('<p><b>Crossover:</b> '+esc(cross.over.c.name)+' passes '+esc(cross.under.c.name)+' around year '+yrs(cross.m/12)+'.</p>');
+    }
+    crossEl.innerHTML = lines.join('') || '<p>Pick a career above to see the chart.</p>';
+  }
+  yearEl.addEventListener('input', function(){ render(true); });
+  var rzT; window.addEventListener('resize', function(){ clearTimeout(rzT); rzT = setTimeout(function(){ render(true); }, 120); });
+  document.addEventListener('hub:tab', function(e){ if (e.detail === 'calculator') requestAnimationFrame(function(){ render(true); }); });
+  buildCards(); render();
+})();
+</script>
