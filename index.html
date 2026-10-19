@@ -776,7 +776,7 @@
 <div id="view-careers" hidden>
   <section class="hero">
     <h2>Career Clusters</h2>
-    <p class="careers-legend">Every career your group could choose, grouped by cluster. Dentist and Certified Nursing Assistant are marked because they're the two examples used throughout the Career Characteristics tab.</p>
+    <p class="careers-legend">Every career your group could choose, grouped by cluster. Dentists and Nursing Assistants and Orderlies (CNA) are marked because they're the two examples used throughout the Career Characteristics tab.</p>
   </section>
   <div class="cluster-grid" id="cluster-grid"></div>
 </div>
@@ -791,7 +791,7 @@
           <select id="rz-period"><option value="1">1</option><option value="2">2</option><option value="5">5</option><option value="6">6</option></select>
         </label>
         <label class="fld">Number of groups
-          <select id="rz-n"><option value="9" selected>9</option><option value="8">8</option><option value="7">7</option><option value="6">6</option></select>
+          <select id="rz-n"><option value="13">13</option><option value="12">12</option><option value="11">11</option><option value="10">10</option><option value="9" selected>9</option><option value="8">8</option><option value="7">7</option><option value="6">6</option></select>
         </label>
         <button class="btn" id="rz-shuffle" type="button">Shuffle</button>
       </div>
@@ -1089,18 +1089,20 @@
   ];
 
   var CLUSTERS = [
-    { name: "Direct Patient Care", careers: ["Registered Nurse","Licensed Vocational Nurse","Certified Nursing Assistant","Nurse Practitioner","Nurse Manager / Supervisor","Clinical Nurse Specialist","Medical Assistant","Physician Assistant","Nurse Anesthetist","Physician / Doctor"] },
-    { name: "Diagnostic & Imaging", careers: ["Radiologic Technologist","Radiologic Technologist Lead","Diagnostic Medical Sonographer","MRI Technologist","X-Ray Laboratory Aide"] },
-    { name: "Rehabilitation Therapy", careers: ["Physical Therapist Assistant","Occupational Therapy Assistant","Respiratory Therapist","Physical Therapist","Occupational Therapist","Speech-Language Pathologist","Therapy Aide"] },
-    { name: "Public & Community Health", careers: ["Community Health Worker","Health Educator","Epidemiologist","Public Health Nurse","Health Program Coordinator","Medical Scientist / Researcher","Biostatistician"] },
-    { name: "Mental & Behavioral Health", careers: ["Psychiatric Technician","Marriage & Family Therapist","Substance Abuse Counselor","Behavioral Health Clinician","Clinical Psychologist","Medical Social Worker","Patient Navigator"] },
-    { name: "Health Care Administration", careers: ["Medical & Health Services Manager","Medical Billing & Coding Specialist","Health Care Analyst","Administrative Analyst","Medical Evaluations Assistant","Hospital Administrator / Medical Director"] },
-    { name: "Emergency & Surgical Support", careers: ["EMT / Paramedic","Surgical Technologist","Emergency Room Technician","Unit Clerk"] },
-    { name: "Lab Science & Biotechnology", careers: ["Clinical Laboratory Technologist","Phlebotomist","Biomedical Equipment Technician","Pharmacist","Geneticist / Genetic Counselor","Research Scientist"] },
-    { name: "Dental Health", careers: ["Dental Assistant","Dental Hygienist","Dentist","Orthodontist","Oral and Maxillofacial Surgeon"] }
+    { name: "Direct Patient Care", careers: ["Registered Nurses (RN)","Licensed Practical and Licensed Vocational Nurses (LPN/LVN)","Nursing Assistants and Orderlies (CNA)","Nurse Practitioners (NP)","Nurse Anesthetists (CRNA)","Medical Assistants","Physician Assistants (PA)","Physicians and Surgeons (Doctor)"] },
+    { name: "Diagnostic & Imaging", careers: ["Radiologic Technologists and Technicians (X-Ray Tech)","Magnetic Resonance Imaging Technologists (MRI Tech)","Diagnostic Medical Sonographers (Ultrasound Tech)","Cardiovascular Technologists and Technicians","Nuclear Medicine Technologists","Radiation Therapists"] },
+    { name: "Rehabilitation Therapy", careers: ["Physical Therapist Assistants (PTA)","Occupational Therapy Assistants (OTA)","Respiratory Therapists","Physical Therapists (PT)","Occupational Therapists (OT)","Speech-Language Pathologists (Speech Therapist)","Physical Therapist Aides"] },
+    { name: "Public & Community Health", careers: ["Community Health Workers","Health Education Specialists (Health Educator)","Epidemiologists","Medical Scientists (Medical Researcher)","Dietitians and Nutritionists","Occupational Health and Safety Specialists and Technicians"] },
+    { name: "Mental & Behavioral Health", careers: ["Psychiatric Technicians","Marriage and Family Therapists","Substance Abuse, Behavioral Disorder, and Mental Health Counselors (Substance Abuse Counselor)","Psychologists (Clinical Psychologist)","Healthcare Social Workers (Medical Social Worker)"] },
+    { name: "Health Care Administration", careers: ["Medical and Health Services Managers (Hospital Administrator)","Medical Records Specialists (Medical Billing & Coding)","Medical Secretaries and Administrative Assistants (Unit Clerk)","Health Information Technologists and Medical Registrars","Medical Transcriptionists"] },
+    { name: "Emergency & Surgical Support", careers: ["Emergency Medical Technicians (EMT)","Paramedics","Surgical Technologists (Surgical Tech)","Surgical Assistants"] },
+    { name: "Lab Science & Biotechnology", careers: ["Clinical Laboratory Technologists and Technicians (Lab Tech)","Phlebotomists","Medical Equipment Repairers (Biomedical Equipment Technician)","Pharmacists","Genetic Counselors"] },
+    { name: "Dental Health", careers: ["Dental Assistants","Dental Hygienists","Dentists","Orthodontists","Oral and Maxillofacial Surgeons"] }
   ];
 
-  var EXAMPLE_CAREERS = ["Certified Nursing Assistant", "Dentist"];
+
+
+  var EXAMPLE_CAREERS = ["Nursing Assistants and Orderlies (CNA)", "Dentists"];
   window.HUB_CLUSTERS = CLUSTERS;
 
   var tilesRow = document.getElementById('tiles-row');
@@ -1355,13 +1357,14 @@
   }
 
   /* ---------------- record text / csv / mail ---------------- */
+  function gl(v){ return v == null ? [] : (Array.isArray(v) ? v : [v]); }
   function sortedRows(rec){
     var rows = [];
-    CLUSTER_NAMES.forEach(function(c){ if (rec.map[c] != null) rows.push([rec.map[c], c]); });
+    CLUSTER_NAMES.forEach(function(c){ gl(rec.map[c]).forEach(function(g){ rows.push([g, c]); }); });
     rows.sort(function(a,b){ return a[0] - b[0]; });
     return rows;
   }
-  function unassigned(rec){ return CLUSTER_NAMES.filter(function(c){ return rec.map[c] == null; }); }
+  function unassigned(rec){ return CLUSTER_NAMES.filter(function(c){ return gl(rec.map[c]).length === 0; }); }
   function recText(p, rec){
     var lines = ['Group assignments, Period ' + p, 'Locked: ' + fmt(rec.lockedAt)];
     sortedRows(rec).forEach(function(r){ lines.push('Group ' + r[0] + ': ' + r[1]); });
@@ -1433,12 +1436,12 @@
     var cards = [];
     CLUSTER_NAMES.forEach(function(name){
       var g = src ? src[name] : undefined;
-      var card = document.createElement('div'); card.className = 'acard' + (src && g == null ? ' empty' : '');
+      var card = document.createElement('div'); card.className = 'acard' + (src && gl(g).length === 0 ? ' empty' : '');
       var cl = document.createElement('div'); cl.className = 'cl'; cl.textContent = name;
       var gp = document.createElement('div'); gp.className = 'gp';
       var sm = document.createElement('small'); sm.textContent = 'Group';
       var sp = document.createElement('span');
-      var finalText = !src ? '?' : (g == null ? '-' : String(g));
+      var finalText = !src ? '?' : (gl(g).length === 0 ? '-' : gl(g).join(' & '));
       sp.textContent = animate ? String(1 + rand(n)) : finalText;
       gp.appendChild(sm); gp.appendChild(sp); card.appendChild(cl); card.appendChild(gp); grid.appendChild(card);
       cards.push({card:card, span:sp, finalText:finalText});
@@ -1459,7 +1462,7 @@
           if (t >= 700 + i * 240) { c.done = true; c.span.textContent = c.finalText; c.card.classList.add('settled'); }
           else { c.span.textContent = String(1 + rand(n)); pending++; }
         });
-        if (!pending) { clearInterval(rollTimer); rollTimer = null; animating = false; syncUI(); setMsg($('rz-msg'), 'Shuffled. Shuffle again, or enter your code to lock it in.'); }
+        if (!pending) { clearInterval(rollTimer); rollTimer = null; animating = false; syncUI(); setMsg($('rz-msg'), (n > CLUSTER_NAMES.length ? 'Shuffled. With ' + n + ' groups, some clusters have two groups. ' : 'Shuffled. ') + 'Shuffle again, or enter your code to lock it in.'); }
       }, 70);
     }
   }
@@ -1500,7 +1503,9 @@
     if (records()[p] || animating) return;
     var slots = shuffled(CLUSTER_NAMES), map = {};
     CLUSTER_NAMES.forEach(function(c){ map[c] = null; });
-    for (var i = 0; i < n; i++) map[slots[i]] = i + 1;
+    var lists = {};
+    for (var i = 0; i < n; i++){ var cn = slots[i % slots.length]; (lists[cn] = lists[cn] || []).push(i + 1); }
+    for (var cn2 in lists) map[cn2] = lists[cn2].length === 1 ? lists[cn2][0] : lists[cn2];
     preview = {period:p, n:n, map:map};
     animToken++; animating = true;
     setMsg($('rz-msg'), ''); syncUI(); renderGrid(true);
@@ -1805,11 +1810,11 @@
 (function(){
   var COLORS = ['#8fe9d9', '#f0b25e', '#b9a7f5'];
   var PRESETS = {
-    cna: { label:'Certified Nursing Assistant', short:'CNA', school:0.25, train:0, trainPay:0, pay:41870, debt:884, rate:0, repay:1, raise:0,
+    cna: { label:'Nursing Assistants and Orderlies (CNA)', short:'CNA', school:0.25, train:0, trainPay:0, pay:41870, debt:884, rate:0, repay:1, raise:0,
       src:'Pay: BLS Occupational Outlook Handbook, nursing assistants and orderlies, median, May 2025. Cost: Ventura College CNA program, about $884 total including the state exam. Training is a short certificate program.' },
-    dentist: { label:'Dentist', short:'Dentist', school:8, train:0, trainPay:0, pay:176110, debt:297800, rate:7, repay:10, raise:0,
+    dentist: { label:'Dentists', short:'Dentist', school:8, train:0, trainPay:0, pay:176110, debt:297800, rate:7, repay:10, raise:0,
       src:'Pay: BLS Occupational Outlook Handbook, dentists, median, May 2025. Debt: ADEA, 2025 dental graduates who borrowed, average $297,800. School is 4 years of college plus 4 years of dental school. Interest rate is an assumption.' },
-    physician: { label:'Physician', short:'Physician', school:8, train:4, trainPay:68166, pay:275930, debt:205000, rate:7, repay:10, raise:0,
+    physician: { label:'Physicians and Surgeons', short:'Physician', school:8, train:4, trainPay:68166, pay:275930, debt:205000, rate:7, repay:10, raise:0,
       src:'Pay: BLS Occupational Outlook Handbook, physicians and surgeons, median, May 2025. Training: 4 years of medical school after college, then residency of 3 to 9 years depending on specialty; 4 is used here. Resident pay: AAMC 2025 survey, average first-year stipend $68,166. Debt: AAMC, class of 2024, median among graduates with debt $205,000. Interest rate is an assumption.' }
   };
   var FIELDS = [
@@ -1868,7 +1873,7 @@
     cardsEl.innerHTML = '';
     slots.forEach(function(c, i){
       var d = document.createElement('div'); d.className = 'wc-card' + (c.key === 'none' ? ' off' : ''); d.style.setProperty('--c', COLORS[i]);
-      var opts = [['cna','Certified Nursing Assistant'],['dentist','Dentist'],['physician','Physician'],['custom','Custom (enter your own)'],['none','None']]
+      var opts = [['cna','Nursing Assistants and Orderlies (CNA)'],['dentist','Dentists'],['physician','Physicians and Surgeons'],['custom','Custom (enter your own)'],['none','None']]
         .map(function(o){ return '<option value="'+o[0]+'"'+(c.key===o[0]?' selected':'')+'>'+o[1]+'</option>'; }).join('');
       var f = FIELDS.map(function(F){
         return '<label class="'+(F[3]||'')+'">'+F[1]+'<input data-k="'+F[0]+'" data-i="'+i+'" type="'+F[2]+'"'+(F[2]==='number'?' step="any" min="0" inputmode="decimal"':'')+' value="'+esc(c[F[0]])+'"></label>';
